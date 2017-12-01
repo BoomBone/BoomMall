@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BoomMall.iml" filepath="$PROJECT_DIR$/BoomMall.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/orange-core/orange-core.iml" filepath="$PROJECT_DIR$/orange-core/orange-core.iml" />
     </modules>
   </component>
 </project>
