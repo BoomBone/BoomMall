@@ -1,1 +1,1 @@
-include ':app','orange-core'
+include ':app', ':orange-annotations', ':orange-compiler', ':orange-ec', 'orange-core'

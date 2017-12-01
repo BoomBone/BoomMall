@@ -4,7 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BoomMall.iml" filepath="$PROJECT_DIR$/BoomMall.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/orange-annotations/orange-annotations.iml" filepath="$PROJECT_DIR$/orange-annotations/orange-annotations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/orange-compiler/orange-compiler.iml" filepath="$PROJECT_DIR$/orange-compiler/orange-compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/orange-core/orange-core.iml" filepath="$PROJECT_DIR$/orange-core/orange-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/orange-ec/orange-ec.iml" filepath="$PROJECT_DIR$/orange-ec/orange-ec.iml" />
     </modules>
   </component>
 </project>
