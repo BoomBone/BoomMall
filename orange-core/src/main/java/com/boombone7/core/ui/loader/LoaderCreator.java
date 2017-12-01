@@ -1,4 +1,4 @@
-package com.boombone7.core.ui;
+package com.boombone7.core.ui.loader;
 
 import android.content.Context;
 import android.util.Log;
