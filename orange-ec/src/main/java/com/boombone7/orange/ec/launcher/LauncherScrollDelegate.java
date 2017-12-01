@@ -6,8 +6,10 @@ import android.view.View;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.boombone7.core.I;
 import com.boombone7.core.delegates.OrangeDelegate;
 import com.boombone7.core.ui.launcher.LauncherHolderCreator;
+import com.boombone7.core.util.storage.OrangePreference;
 import com.boombone7.orange.ec.R;
 
 import java.util.ArrayList;
@@ -50,6 +52,8 @@ public class LauncherScrollDelegate extends OrangeDelegate implements OnItemClic
 
     @Override
     public void onItemClick(int position) {
-
+        if (position == INTEGERS.size()-1){
+            OrangePreference.setAppFlag(I.ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP, true);
+        }
     }
 }

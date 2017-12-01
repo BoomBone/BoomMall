@@ -25,6 +25,10 @@ public interface I {
         String UPLOAD = "UPLOAD";
     }
 
+    interface ScrollLauncherTag{
+        String HAS_FIRST_LAUNCHER_APP = "HAS_FIRST_LAUNCHER_APP";
+    }
+
     interface LoaderStyle {
         String BallPulseIndicator = "BallPulseIndicator";
         String BallGridPulseIndicator = "BallGridPulseIndicator";
