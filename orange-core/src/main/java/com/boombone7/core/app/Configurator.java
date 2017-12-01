@@ -3,6 +3,8 @@ package com.boombone7.core.app;
 import android.os.Handler;
 
 import com.boombone7.core.I;
+import com.joanzapata.iconify.IconFontDescriptor;
+import com.joanzapata.iconify.Iconify;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +20,7 @@ public class Configurator {
     private static final HashMap<String, Object> ORANGE_CONFIGS = new HashMap<>();
     private static final Handler HANDLER = new Handler();
     private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
+    private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
 
     private Configurator() {
         ORANGE_CONFIGS.put(I.Configkey.CONFIG_READY, false);
@@ -32,7 +35,17 @@ public class Configurator {
         return LazyHolder.INSTANCE;
     }
     public final void configure(){
+        initIcons();
         ORANGE_CONFIGS.put(I.Configkey.CONFIG_READY, true);
+    }
+
+    private void initIcons(){
+        if (ICONS.size()>0){
+            final Iconify.IconifyInitializer initializer = Iconify.with(ICONS.get(0));
+            for (int i =0;i<ICONS.size();i++){
+                initializer.with(ICONS.get(i));
+            }
+        }
     }
 
     final HashMap<String,Object> getConfig(){
@@ -43,6 +56,12 @@ public class Configurator {
         ORANGE_CONFIGS.put(I.Configkey.API_HOST, apiHost);
         return this;
     }
+
+    public final Configurator withIcon(IconFontDescriptor descriptor){
+        ICONS.add(descriptor);
+        return this;
+    }
+
 
     public final Configurator withLoaderDelayed(long delayed) {
         ORANGE_CONFIGS.put(I.Configkey.LOADER_DELAYED, delayed);
