@@ -22,5 +22,11 @@
         android:text="测试"
         android:onClick="onClick"
         />
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/tv_icon_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="{fa-coffee}"
+        />
 
 </LinearLayout>
