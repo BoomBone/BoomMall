@@ -3,14 +3,13 @@ package com.boombone7.core.net;
 import android.content.Context;
 
 import com.boombone7.core.I;
-import com.boombone7.core.app.Orange;
 import com.boombone7.core.net.callback.IError;
 import com.boombone7.core.net.callback.IFailure;
 import com.boombone7.core.net.callback.IRequest;
 import com.boombone7.core.net.callback.ISuccess;
 import com.boombone7.core.net.callback.RequestCallbacks;
 import com.boombone7.core.net.download.DownloadHandler;
-import com.boombone7.core.ui.OrangeLoader;
+import com.boombone7.core.ui.loader.OrangeLoader;
 
 import java.io.File;
 import java.util.WeakHashMap;

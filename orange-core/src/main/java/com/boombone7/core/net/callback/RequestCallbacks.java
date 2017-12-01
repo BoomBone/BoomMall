@@ -5,7 +5,7 @@ import android.os.Handler;
 import com.boombone7.core.I;
 import com.boombone7.core.app.Orange;
 import com.boombone7.core.net.RestCreator;
-import com.boombone7.core.ui.OrangeLoader;
+import com.boombone7.core.ui.loader.OrangeLoader;
 
 import retrofit2.Call;
 import retrofit2.Callback;

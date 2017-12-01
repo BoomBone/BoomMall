@@ -3,16 +3,8 @@ package com.boombone7.core.net.rx;
 import android.content.Context;
 
 import com.boombone7.core.I;
-import com.boombone7.core.net.RestClientBuilder;
 import com.boombone7.core.net.RestCreator;
-import com.boombone7.core.net.RestService;
-import com.boombone7.core.net.callback.IError;
-import com.boombone7.core.net.callback.IFailure;
-import com.boombone7.core.net.callback.IRequest;
-import com.boombone7.core.net.callback.ISuccess;
-import com.boombone7.core.net.callback.RequestCallbacks;
-import com.boombone7.core.net.download.DownloadHandler;
-import com.boombone7.core.ui.OrangeLoader;
+import com.boombone7.core.ui.loader.OrangeLoader;
 
 import java.io.File;
 import java.util.WeakHashMap;
@@ -22,8 +14,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 /**
  * @author Ting
