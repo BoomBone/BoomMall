@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import com.boombone7.core.I;
 import com.boombone7.core.delegates.OrangeDelegate;
+import com.boombone7.core.util.storage.OrangePreference;
 import com.boombone7.core.util.timer.BaseTimerTask;
 import com.boombone7.core.util.timer.ITimerListener;
 import com.boombone7.orange.ec.R;
@@ -47,7 +49,20 @@ public class LauncherDelegate extends OrangeDelegate implements ITimerListener {
 
     @OnClick(R2.id.tv_launcher_timer)
     void onClickTimerView() {
+        if (mTimer!=null){
+            mTimer.cancel();
+            mTimer = null;
+            checkIsShowScroll();
+        }
+    }
 
+    //判断是否显示滚动页面
+    private void checkIsShowScroll(){
+        if (!OrangePreference.getAppFlag(I.ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP)){
+            start(new LauncherScrollDelegate(),SINGLETASK);
+        }else{
+            //TODO 判断用户是否登录
+        }
     }
 
     @Override
@@ -62,6 +77,7 @@ public class LauncherDelegate extends OrangeDelegate implements ITimerListener {
                         if (mTimer!=null){
                             mTimer.cancel();
                             mTimer = null;
+                            checkIsShowScroll();
                         }
                     }
                 }
