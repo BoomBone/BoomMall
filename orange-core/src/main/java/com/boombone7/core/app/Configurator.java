@@ -5,6 +5,8 @@ import android.os.Handler;
 import com.boombone7.core.I;
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +39,7 @@ public class Configurator {
     public final void configure(){
         initIcons();
         ORANGE_CONFIGS.put(I.Configkey.CONFIG_READY, true);
+        Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
     private void initIcons(){
