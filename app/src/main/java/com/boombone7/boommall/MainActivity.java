@@ -9,6 +9,7 @@ import com.boombone7.core.activities.ProxyActivity;
 import com.boombone7.core.delegates.OrangeDelegate;
 import com.boombone7.orange.ec.launcher.LauncherDelegate;
 import com.boombone7.orange.ec.launcher.LauncherScrollDelegate;
+import com.boombone7.orange.ec.sign.SignUpDelegate;
 
 
 /**
@@ -23,10 +24,11 @@ public class MainActivity extends ProxyActivity {
         if (actionBar!=null){
             actionBar.hide();
         }
+        //TODO 清单文件设置成竖屏
     }
 
     @Override
     public OrangeDelegate setRootDelegate() {
-        return new LauncherDelegate();
+        return new SignUpDelegate();
     }
 }
