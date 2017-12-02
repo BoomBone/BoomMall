@@ -29,6 +29,11 @@ public interface I {
         String HAS_FIRST_LAUNCHER_APP = "HAS_FIRST_LAUNCHER_APP";
     }
 
+    interface OnLauncherFinishTag{
+        String SIGNED = "SIGNED";
+        String NOT_SIGNED = "NOT_SIGNED";
+    }
+
     interface LoaderStyle {
         String BallPulseIndicator = "BallPulseIndicator";
         String BallGridPulseIndicator = "BallGridPulseIndicator";

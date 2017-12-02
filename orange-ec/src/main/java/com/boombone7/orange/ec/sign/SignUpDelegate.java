@@ -1,5 +1,6 @@
 package com.boombone7.orange.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -31,6 +32,7 @@ public class SignUpDelegate extends OrangeDelegate {
     @BindView(R2.id.edit_sign_up_re_password)
     TextInputEditText mRePassword = null;
 
+    private ISignListener mISignListener = null;
     @Override
     public Object setLayout() {
         return R.layout.delegate_sign_up;
@@ -41,12 +43,23 @@ public class SignUpDelegate extends OrangeDelegate {
 
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener) {
+            mISignListener = (ISignListener) activity;
+        }
+    }
 
     @OnClick(R2.id.btn_sign_up)
     public void onMBtnSignUpClicked() {
         if (checkForm()){
             //TODO 注册网络请求
             Toast.makeText(getContext(), "注册成功，这是个假注册啦=。=", Toast.LENGTH_SHORT).show();
+            //TODO 注册成功 返回数据存到数据库 设置登录状态
+            String response="jaon";
+            SignHandler.onSignIn(response,mISignListener);
+
         }
     }
 

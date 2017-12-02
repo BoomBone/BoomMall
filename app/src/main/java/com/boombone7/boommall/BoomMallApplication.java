@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.boombone7.core.app.Orange;
 import com.boombone7.core.net.interceptors.DebugInterceptor;
+import com.boombone7.orange.ec.database.DatabaseManager;
 import com.boombone7.orange.ec.icon.FontEcModule;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
@@ -23,5 +24,6 @@ public class BoomMallApplication extends Application {
                 .withApiHost("http://127.0.0.1/")
                 .withInterceptor(new DebugInterceptor("index",R.raw.test))
                 .configure();
+        DatabaseManager.getInstance().init(this);
     }
 }
