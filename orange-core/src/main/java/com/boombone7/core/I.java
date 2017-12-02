@@ -13,6 +13,9 @@ public interface I {
         String LOADER_DELAYED = "LOADER_DELAYED";
         String HANDLER = "HANDLER";
         String INTERCEPTOR = "INTERCEPTOR";
+        String WE_CHAT_APP_ID = "WE_CHAT_APP_ID";
+        String WE_CHAT_APP_SECRET = "WE_CHAT_APP_SECRET";
+        String ACTIVITY = "ACTIVITY";
     }
 
     interface HttpMethod {
