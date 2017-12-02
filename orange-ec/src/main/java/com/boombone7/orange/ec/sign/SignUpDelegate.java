@@ -13,7 +13,6 @@ import com.boombone7.orange.ec.R2;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * @author Ting
@@ -34,7 +33,7 @@ public class SignUpDelegate extends OrangeDelegate {
 
     @Override
     public Object setLayout() {
-        return R.layout.delegate_signup;
+        return R.layout.delegate_sign_up;
     }
 
     @Override
@@ -53,6 +52,7 @@ public class SignUpDelegate extends OrangeDelegate {
 
     @OnClick(R2.id.tv_link_sign_in)
     public void onMTvLinkSignInClicked() {
+        getSupportDelegate().start(new SignInDelegate());
     }
 
     private boolean checkForm() {
