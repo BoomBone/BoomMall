@@ -66,4 +66,7 @@ dependencies {
     //JSON依赖Android版
     compile 'com.alibaba:fastjson:1.1.57.android'
 
+    //Log
+    compile 'com.orhanobut:logger:2.1.1'
+
 }
