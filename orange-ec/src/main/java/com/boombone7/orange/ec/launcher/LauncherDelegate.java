@@ -1,12 +1,16 @@
 package com.boombone7.orange.ec.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
 import com.boombone7.core.I;
+import com.boombone7.core.app.AccountManager;
+import com.boombone7.core.app.IUserChecker;
 import com.boombone7.core.delegates.OrangeDelegate;
+import com.boombone7.core.ui.launcher.ILauncherListener;
 import com.boombone7.core.util.storage.OrangePreference;
 import com.boombone7.core.util.timer.BaseTimerTask;
 import com.boombone7.core.util.timer.ITimerListener;
@@ -28,8 +32,8 @@ public class LauncherDelegate extends OrangeDelegate implements ITimerListener {
     @BindView(R2.id.tv_launcher_timer)
     AppCompatTextView mTvTimer;
     private int mCount = 5;
-
     private Timer mTimer = null;
+    private ILauncherListener mILauncherListener=null;
 
     @Override
     public Object setLayout() {
@@ -39,6 +43,14 @@ public class LauncherDelegate extends OrangeDelegate implements ITimerListener {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         initTimer();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ILauncherListener){
+            mILauncherListener = (ILauncherListener) activity;
+        }
     }
 
     private void initTimer() {
@@ -62,6 +74,21 @@ public class LauncherDelegate extends OrangeDelegate implements ITimerListener {
             start(new LauncherScrollDelegate(),SINGLETASK);
         }else{
             //TODO 判断用户是否登录
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(I.OnLauncherFinishTag.SIGNED);
+                    }
+                }
+
+                @Override
+                public void onNotSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(I.OnLauncherFinishTag.NOT_SIGNED);
+                    }
+                }
+            });
         }
     }
 

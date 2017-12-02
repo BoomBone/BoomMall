@@ -1,5 +1,6 @@
 package com.boombone7.orange.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -29,6 +30,7 @@ public class SignInDelegate extends OrangeDelegate {
     @BindView(R2.id.edit_sign_in_password)
     TextInputEditText mPassword = null;
 
+    private ISignListener mISignListener = null;
     private String email;
     private String password;
 
@@ -42,14 +44,21 @@ public class SignInDelegate extends OrangeDelegate {
 
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener) {
+            mISignListener = (ISignListener) activity;
+        }
+    }
 
     @OnClick(R2.id.btn_sign_in)
     public void onMBtnSignInClicked() {
-        if (checkForm()){
+        if (checkForm()) {
             //TODO 登录入口默认账户admin@qq.com 密码123456
-            if (email.equals("admin@qq.com")||password.equals("123456")){
+            if (email.equals("admin@qq.com") || password.equals("123456")) {
                 Toast.makeText(getContext(), "登陆成功", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 Toast.makeText(getContext(), "登陆失败", Toast.LENGTH_SHORT).show();
             }
         }
@@ -62,10 +71,8 @@ public class SignInDelegate extends OrangeDelegate {
 
     @OnClick(R2.id.icon_sign_in_wechat)
     public void onMIconSignInWechatClicked() {
-        if (checkForm()){
-            //TODO 微信登录
-            Toast.makeText(getContext(), "微信登录，不好使，别点了", Toast.LENGTH_SHORT).show();
-        }
+        //TODO 微信登录
+        Toast.makeText(getContext(), "微信登录，不好使，别点了", Toast.LENGTH_SHORT).show();
     }
 
     private boolean checkForm() {
