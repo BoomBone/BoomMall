@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.boombone7.core.delegates.OrangeDelegate;
+import com.boombone7.core.wechat.OrangeWeChat;
+import com.boombone7.core.wechat.callbacks.IWeChatSignInCallback;
 import com.boombone7.orange.ec.R;
 import com.boombone7.orange.ec.R2;
 
@@ -73,6 +75,15 @@ public class SignInDelegate extends OrangeDelegate {
     public void onMIconSignInWechatClicked() {
         //TODO 微信登录
         Toast.makeText(getContext(), "微信登录，不好使，别点了", Toast.LENGTH_SHORT).show();
+//        OrangeWeChat
+//                .getInstance()
+//                .onSignSuccess(new IWeChatSignInCallback() {
+//                    @Override
+//                    public void onSignInSuccess(String userInfo) {
+//                        Toast.makeText(getContext(), userInfo, Toast.LENGTH_LONG).show();
+//                    }
+//                })
+//                .signIn();
     }
 
     private boolean checkForm() {

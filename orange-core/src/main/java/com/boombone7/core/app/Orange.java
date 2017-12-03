@@ -33,4 +33,8 @@ public final class Orange {
     public static Handler getHandler() {
         return getConfiguration(I.Configkey.HANDLER);
     }
+
+    public static Configurator getConfigurator() {
+        return Configurator.getInstance();
+    }
 }
