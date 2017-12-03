@@ -21,6 +21,8 @@ public class BoomMallApplication extends Application {
         Orange.init(getApplicationContext())
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEcModule())
+                .withWeChatAppId("")
+                .withWeChatAppSecret("")
                 .withApiHost("http://127.0.0.1/")
                 .withInterceptor(new DebugInterceptor("index",R.raw.test))
                 .configure();

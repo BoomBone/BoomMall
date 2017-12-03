@@ -1,5 +1,6 @@
 package com.boombone7.core.app;
 
+import android.app.Activity;
 import android.os.Handler;
 
 import com.boombone7.core.I;
@@ -65,6 +66,20 @@ public class Configurator {
         return this;
     }
 
+    public final Configurator withWeChatAppId(String appId) {
+        ORANGE_CONFIGS.put(I.Configkey.WE_CHAT_APP_ID, appId);
+        return this;
+    }
+
+    public final Configurator withWeChatAppSecret(String appSecret) {
+        ORANGE_CONFIGS.put(I.Configkey.WE_CHAT_APP_SECRET, appSecret);
+        return this;
+    }
+
+    public final Configurator withActivity(Activity activity) {
+        ORANGE_CONFIGS.put(I.Configkey.ACTIVITY, activity);
+        return this;
+    }
 
     public final Configurator withLoaderDelayed(long delayed) {
         ORANGE_CONFIGS.put(I.Configkey.LOADER_DELAYED, delayed);

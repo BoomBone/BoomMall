@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.boombone7.core.I;
 import com.boombone7.core.activities.ProxyActivity;
+import com.boombone7.core.app.Orange;
 import com.boombone7.core.delegates.OrangeDelegate;
 import com.boombone7.core.ui.launcher.ILauncherListener;
 import com.boombone7.orange.ec.launcher.LauncherDelegate;
@@ -32,6 +33,7 @@ public class MainActivity extends ProxyActivity implements ISignListener, ILaunc
         if (actionBar != null) {
             actionBar.hide();
         }
+        Orange.getConfigurator().withActivity(this);
         //TODO 清单文件设置成竖屏
     }
 
