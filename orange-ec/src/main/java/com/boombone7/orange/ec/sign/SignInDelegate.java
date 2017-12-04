@@ -60,6 +60,8 @@ public class SignInDelegate extends OrangeDelegate {
             //TODO 登录入口默认账户admin@qq.com 密码123456
             if (email.equals("admin@qq.com") || password.equals("123456")) {
                 Toast.makeText(getContext(), "登陆成功", Toast.LENGTH_SHORT).show();
+                String response = "";
+                SignHandler.onSignIn(response, mISignListener);
             } else {
                 Toast.makeText(getContext(), "登陆失败", Toast.LENGTH_SHORT).show();
             }
