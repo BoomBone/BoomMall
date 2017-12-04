@@ -27,6 +27,6 @@ public abstract class BottomItemDelegate extends OrangeDelegate {
             TOUCH_TIME = System.currentTimeMillis();
             Toast.makeText(_mActivity, "双击退出" + Orange.getApplicationContext().getString(R.string.app_name), Toast.LENGTH_SHORT).show();
         }
-        return super.onBackPressedSupport();
+        return true;
     }
 }
