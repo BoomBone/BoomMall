@@ -13,6 +13,7 @@ import com.boombone7.core.delegates.OrangeDelegate;
 import com.boombone7.core.ui.launcher.ILauncherListener;
 import com.boombone7.orange.ec.launcher.LauncherDelegate;
 import com.boombone7.orange.ec.launcher.LauncherScrollDelegate;
+import com.boombone7.orange.ec.main.EcBottomDelegate;
 import com.boombone7.orange.ec.sign.ISignListener;
 import com.boombone7.orange.ec.sign.SignInDelegate;
 import com.boombone7.orange.ec.sign.SignUpDelegate;
@@ -39,7 +40,7 @@ public class MainActivity extends ProxyActivity implements ISignListener, ILaunc
 
     @Override
     public OrangeDelegate setRootDelegate() {
-        return new LauncherDelegate();
+        return new EcBottomDelegate();
     }
 
     @Override
@@ -57,6 +58,7 @@ public class MainActivity extends ProxyActivity implements ISignListener, ILaunc
         switch (tag) {
             case SIGNED:
                 Toast.makeText(this, "启动结束，用户登录了", Toast.LENGTH_LONG).show();
+                getSupportDelegate().startWithPop(new EcBottomDelegate());
                 break;
             case NOT_SIGNED:
                 Toast.makeText(this, "启动结束，用户没登录", Toast.LENGTH_LONG).show();
