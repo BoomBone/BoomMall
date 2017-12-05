@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.boombone7.core.I;
 import com.boombone7.core.delegates.bottom.BottomItemDelegate;
 import com.boombone7.core.ui.refresh.RefreshHandler;
 import com.boombone7.orange.ec.R;
@@ -55,6 +56,7 @@ public class IndexDelegate extends BottomItemDelegate {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initRefresh();
+        mRefreshHandler.firstPage(I.URL.FIRST_PAGE_URL);
     }
 
     private void initRefresh() {
@@ -63,6 +65,6 @@ public class IndexDelegate extends BottomItemDelegate {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_green_light
         );
-        mSrlIndex.setProgressViewOffset(true,123,300);
+        mSrlIndex.setProgressViewOffset(true,120,300);
     }
 }

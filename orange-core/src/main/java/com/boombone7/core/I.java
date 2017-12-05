@@ -68,4 +68,8 @@ public interface I {
         String SemiCircleSpinIndicator = "SemiCircleSpinIndicator";
         String CustomIndicator = "CustomIndicator";
     }
+
+    interface URL{
+        String FIRST_PAGE_URL = "http://114.67.235.114/RestServer/api/";
+    }
 }

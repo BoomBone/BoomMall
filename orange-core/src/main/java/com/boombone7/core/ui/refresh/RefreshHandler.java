@@ -1,8 +1,12 @@
 package com.boombone7.core.ui.refresh;
 
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.widget.Toast;
 
+import com.boombone7.core.I;
 import com.boombone7.core.app.Orange;
+import com.boombone7.core.net.RestClient;
+import com.boombone7.core.net.callback.ISuccess;
 
 /**
  *
@@ -29,5 +33,18 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
                 REFRESH_LAYOUT.setRefreshing(false);
             }
         }, 2000);
+    }
+
+    public void firstPage(String url){
+        RestClient.builder()
+                .url(url)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        Toast.makeText(Orange.getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build()
+                .get();
     }
 }
