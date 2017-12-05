@@ -23,6 +23,7 @@ import com.boombone7.core.ui.recycler.MultipleItemEntity;
 import com.boombone7.core.ui.refresh.RefreshHandler;
 import com.boombone7.orange.ec.R;
 import com.boombone7.orange.ec.R2;
+import com.boombone7.orange.ec.main.EcBottomDelegate;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import java.util.ArrayList;
@@ -76,6 +77,9 @@ public class IndexDelegate extends BottomItemDelegate {
         mRvIndex.addItemDecoration
                 (BaseDecoration.create(ContextCompat.getColor(getContext()
                         ,R.color.app_background),5));
+        final EcBottomDelegate ecBottomDelegate = getParentDelegate();
+        mRvIndex.addOnItemTouchListener(IndexItemClickListener.create(ecBottomDelegate));
+
     }
 
     private void initRefresh() {
