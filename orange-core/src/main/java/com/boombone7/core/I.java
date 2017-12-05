@@ -91,7 +91,9 @@ public interface I {
     }
 
     interface URL {
-        String FIRST_PAGE_URL = "http://114.67.235.114/RestServer/api/";
+        String HOST_API = "http://114.67.235.114/RestServer/api/";
+        String INDEX = "index.php";
+        String REFRESH_INDEX = "refresh.php?index=";
     }
 
 

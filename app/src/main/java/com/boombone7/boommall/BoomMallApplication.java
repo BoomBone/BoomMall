@@ -2,6 +2,7 @@ package com.boombone7.boommall;
 
 import android.app.Application;
 
+import com.boombone7.core.I;
 import com.boombone7.core.app.Orange;
 import com.boombone7.core.net.interceptors.DebugInterceptor;
 import com.boombone7.orange.ec.database.DatabaseManager;
@@ -23,8 +24,7 @@ public class BoomMallApplication extends Application {
                 .withIcon(new FontEcModule())
                 .withWeChatAppId("")
                 .withWeChatAppSecret("")
-                .withApiHost("http://127.0.0.1/")
-                .withInterceptor(new DebugInterceptor("index",R.raw.test))
+                .withApiHost(I.URL.HOST_API)
                 .configure();
         DatabaseManager.getInstance().init(this);
     }
