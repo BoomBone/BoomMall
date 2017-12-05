@@ -69,7 +69,21 @@ public interface I {
         String CustomIndicator = "CustomIndicator";
     }
 
+    interface MultipleFields {
+        String ITEM_TYPE = "ITEM_TYPE";
+        String TITLE = "TITLE";
+        String TEXT="TEXT";
+        String IMAGE_URL = "IMAGE_URL";
+        String BANNERS = "BANNERS";
+        String SPAN_SIZE = "SPAN_SIZE";
+        String ID = "ID";
+        String NAME = "NAME";
+        String TAG = "TAG";
+    }
+
     interface URL{
         String FIRST_PAGE_URL = "http://114.67.235.114/RestServer/api/";
     }
+
+
 }
