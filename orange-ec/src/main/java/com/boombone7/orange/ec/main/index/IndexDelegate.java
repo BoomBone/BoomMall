@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -47,7 +48,7 @@ public class IndexDelegate extends BottomItemDelegate {
     @BindView(R2.id.tb_index)
     Toolbar mTbIndex;
 
-    RefreshHandler mRefreshHandler;
+    private RefreshHandler mRefreshHandler = null;
 
     @Override
     public Object setLayout() {
@@ -56,28 +57,20 @@ public class IndexDelegate extends BottomItemDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        mRefreshHandler = new RefreshHandler(mSrlIndex);
-        RestClient.builder()
-                .url(I.URL.FIRST_PAGE_URL)
-                .success(new ISuccess() {
-                    @Override
-                    public void onSuccess(String response) {
-                        IndexDataConverter converter = new IndexDataConverter();
-                        converter.setJsonData(response);
-                        ArrayList<MultipleItemEntity> list = converter.convert();
-                        final String image = list.get(1).getField(I.MultipleFields.IMAGE_URL);
-                        Toast.makeText(Orange.getApplicationContext(), image, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .build()
-                .get();
+        mRefreshHandler = RefreshHandler.create(mSrlIndex, mRvIndex, new IndexDataConverter());
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initRefresh();
-//        mRefreshHandler.firstPage(I.URL.FIRST_PAGE_URL);
+        initRecyclerView();
+        mRefreshHandler.firstPage(I.URL.INDEX);
+    }
+
+    private void initRecyclerView() {
+        final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
+        mRvIndex.setLayoutManager(manager);
     }
 
     private void initRefresh() {
