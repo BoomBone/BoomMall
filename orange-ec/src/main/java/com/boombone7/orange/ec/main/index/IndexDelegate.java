@@ -2,6 +2,7 @@ package com.boombone7.orange.ec.main.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,6 +18,7 @@ import com.boombone7.core.app.Orange;
 import com.boombone7.core.delegates.bottom.BottomItemDelegate;
 import com.boombone7.core.net.RestClient;
 import com.boombone7.core.net.callback.ISuccess;
+import com.boombone7.core.ui.recycler.BaseDecoration;
 import com.boombone7.core.ui.recycler.MultipleItemEntity;
 import com.boombone7.core.ui.refresh.RefreshHandler;
 import com.boombone7.orange.ec.R;
@@ -71,6 +73,9 @@ public class IndexDelegate extends BottomItemDelegate {
     private void initRecyclerView() {
         final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         mRvIndex.setLayoutManager(manager);
+        mRvIndex.addItemDecoration
+                (BaseDecoration.create(ContextCompat.getColor(getContext()
+                        ,R.color.app_background),5));
     }
 
     private void initRefresh() {
