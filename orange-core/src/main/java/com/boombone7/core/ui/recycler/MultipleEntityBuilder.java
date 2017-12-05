@@ -22,7 +22,7 @@ public class MultipleEntityBuilder {
         return this;
     }
 
-    public final MultipleEntityBuilder setFields(Object key, Object value) {
+    public final MultipleEntityBuilder setField(Object key, Object value) {
         FIELDS.put(key, value);
         return this;
     }
