@@ -28,11 +28,11 @@ public interface I {
         String UPLOAD = "UPLOAD";
     }
 
-    interface ScrollLauncherTag{
+    interface ScrollLauncherTag {
         String HAS_FIRST_LAUNCHER_APP = "HAS_FIRST_LAUNCHER_APP";
     }
 
-    interface OnLauncherFinishTag{
+    interface OnLauncherFinishTag {
         String SIGNED = "SIGNED";
         String NOT_SIGNED = "NOT_SIGNED";
     }
@@ -72,7 +72,7 @@ public interface I {
     interface MultipleFields {
         String ITEM_TYPE = "ITEM_TYPE";
         String TITLE = "TITLE";
-        String TEXT="TEXT";
+        String TEXT = "TEXT";
         String IMAGE_URL = "IMAGE_URL";
         String BANNERS = "BANNERS";
         String SPAN_SIZE = "SPAN_SIZE";
@@ -81,7 +81,16 @@ public interface I {
         String TAG = "TAG";
     }
 
-    interface URL{
+    interface ItemType {
+        int TEXT = 1;
+        int IMAGE = 2;
+        int TEXT_IMAGE = 3;
+        int BANNER = 4;
+        int VERTICAL_MENU_LIST = 5;
+        int SINGLE_BIG_IMAGE = 6;
+    }
+
+    interface URL {
         String FIRST_PAGE_URL = "http://114.67.235.114/RestServer/api/";
     }
 
