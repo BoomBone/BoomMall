@@ -18,6 +18,8 @@ import com.boombone7.orange.ec.sign.ISignListener;
 import com.boombone7.orange.ec.sign.SignInDelegate;
 import com.boombone7.orange.ec.sign.SignUpDelegate;
 
+import qiu.niorgai.StatusBarCompat;
+
 import static com.boombone7.core.I.OnLauncherFinishTag.NOT_SIGNED;
 import static com.boombone7.core.I.OnLauncherFinishTag.SIGNED;
 
@@ -35,6 +37,7 @@ public class MainActivity extends ProxyActivity implements ISignListener, ILaunc
             actionBar.hide();
         }
         Orange.getConfigurator().withActivity(this);
+        StatusBarCompat.translucentStatusBar(this,true);
         //TODO 清单文件设置成竖屏
     }
 
