@@ -12,7 +12,9 @@ import com.boombone7.orange.ec.main.sort.SortDelegate;
 import java.util.LinkedHashMap;
 
 /**
- * Created by Ting on 2017/12/4.
+ *
+ * @author Ting
+ * @date 2017/12/4
  */
 
 public class EcBottomDelegate extends BaseBottomDelegate {
