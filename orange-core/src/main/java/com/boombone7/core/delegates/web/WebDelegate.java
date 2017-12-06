@@ -24,6 +24,7 @@ public abstract class WebDelegate extends OrangeDelegate implements IWebViewInit
     private WebView mWebView = null;
     private final ReferenceQueue<WebView> WEB_VIEW_QUEUE = new ReferenceQueue<>();
     private boolean mIsWebViewAvailable = false;
+    private OrangeDelegate mTopDelegate = null;
 
     public abstract IWebViewInitializer setInitializer();
 
@@ -56,6 +57,24 @@ public abstract class WebDelegate extends OrangeDelegate implements IWebViewInit
                 throw new NullPointerException("Initializer is null");
             }
         }
+    }
+
+    public void setTopDelegate(OrangeDelegate delegate){
+        mTopDelegate = delegate;
+    }
+
+    public OrangeDelegate getTopDelegate(){
+        if (mTopDelegate == null){
+            mTopDelegate = this;
+        }
+        return mTopDelegate;
+    }
+
+    public WebView getWebView() {
+        if (mWebView == null) {
+            throw new NullPointerException("WebView IS NULL!");
+        }
+        return mIsWebViewAvailable ? mWebView : null;
     }
 
     @Override
