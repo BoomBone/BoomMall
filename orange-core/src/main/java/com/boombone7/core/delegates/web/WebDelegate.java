@@ -51,7 +51,7 @@ public abstract class WebDelegate extends OrangeDelegate implements IWebViewInit
                 mWebView.setWebViewClient(initializer.initWebViewClient());
                 mWebView.setWebChromeClient(initializer.initWebChromeClient());
                 final String name = Orange.getConfiguration(I.Configkey.JAVASCRIPT_INTERFACE);
-                mWebView.addJavascriptInterface(OrangeWebInterface.create(this), name);
+                mWebView.addJavascriptInterface(OrangeWebInterface.create(this), "orange");
                 mIsWebViewAvailable = true;
             } else {
                 throw new NullPointerException("Initializer is null");

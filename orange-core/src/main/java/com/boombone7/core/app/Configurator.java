@@ -2,8 +2,11 @@ package com.boombone7.core.app;
 
 import android.app.Activity;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 
 import com.boombone7.core.I;
+import com.boombone7.core.delegates.web.event.Event;
+import com.boombone7.core.delegates.web.event.EventManager;
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -95,6 +98,17 @@ public class Configurator {
     public final Configurator withInterceptors(ArrayList<Interceptor> interceptors){
         INTERCEPTORS.addAll(interceptors);
         ORANGE_CONFIGS.put(I.Configkey.INTERCEPTOR, INTERCEPTORS);
+        return this;
+    }
+
+    public Configurator withJavascriptInterface(@NonNull String name) {
+        ORANGE_CONFIGS.put(I.Configkey.JAVASCRIPT_INTERFACE, name);
+        return this;
+    }
+
+    public Configurator withWebEvent(@NonNull String name, @NonNull Event event) {
+        final EventManager manager = EventManager.getInstance();
+        manager.addEvent(name, event);
         return this;
     }
 
