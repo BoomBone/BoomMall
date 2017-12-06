@@ -8,6 +8,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.boombone7.core.I;
+import com.boombone7.core.delegates.web.client.WebViewClientImpl;
+import com.boombone7.core.delegates.web.route.Router;
 
 /**
  * @author Ting
@@ -26,31 +28,36 @@ public class WebDelegateImpl extends WebDelegate {
 
     @Override
     public WebView initWebView(WebView webView) {
-        return null;
+        return new WebViewInitializer().createWebView(webView);
     }
 
     @Override
     public WebViewClient initWebViewClient() {
-        return null;
+        final WebViewClientImpl client = new WebViewClientImpl(this);
+
+        return client;
     }
 
     @Override
     public WebChromeClient initWebChromeClient() {
-        return null;
+        return new WebChromeClient();
     }
 
     @Override
     public Object setLayout() {
-        return null;
+        return getWebView();
     }
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-
+        if (getUrl()!=null){
+            //用原生的方式模拟web跳转并进行页面加载
+            Router.getInstatnce().loadPage(this,getUrl());
+        }
     }
 
     @Override
     public IWebViewInitializer setInitializer() {
-        return null;
+        return this;
     }
 }

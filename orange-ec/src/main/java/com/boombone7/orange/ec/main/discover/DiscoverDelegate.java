@@ -5,7 +5,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.boombone7.core.delegates.bottom.BottomItemDelegate;
+import com.boombone7.core.delegates.web.WebDelegate;
+import com.boombone7.core.delegates.web.WebDelegateImpl;
 import com.boombone7.orange.ec.R;
+
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  *
@@ -22,5 +27,17 @@ public class DiscoverDelegate extends BottomItemDelegate{
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
 
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        final WebDelegate delegate = WebDelegateImpl.create("index.html");
+        loadRootFragment(R.id.web_discovery_container,delegate);
+    }
+
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        return new DefaultHorizontalAnimator();
     }
 }

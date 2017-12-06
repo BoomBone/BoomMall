@@ -77,6 +77,13 @@ public abstract class WebDelegate extends OrangeDelegate implements IWebViewInit
         return mIsWebViewAvailable ? mWebView : null;
     }
 
+    public String getUrl() {
+        if (mUrl == null) {
+            throw new NullPointerException("Url IS NULL!");
+        }
+        return mUrl;
+    }
+
     @Override
     public void onPause() {
         super.onPause();
