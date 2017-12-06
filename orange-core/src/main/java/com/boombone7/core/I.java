@@ -16,6 +16,7 @@ public interface I {
         String WE_CHAT_APP_ID = "WE_CHAT_APP_ID";
         String WE_CHAT_APP_SECRET = "WE_CHAT_APP_SECRET";
         String ACTIVITY = "ACTIVITY";
+        String JAVASCRIPT_INTERFACE = "JAVASCRIPT_INTERFACE";
     }
 
     interface HttpMethod {
@@ -96,6 +97,10 @@ public interface I {
         String REFRESH_INDEX = "refresh.php?index=";
         String SORT_LIST = "sort_list.php";
         String SORT_CONTENT_LIST = "sort_content_list.php?contentId=";
+    }
+
+    interface RouteKeys{
+        String URL = "URL";
     }
 
 
