@@ -95,6 +95,7 @@ public interface I {
         String INDEX = "index.php";
         String REFRESH_INDEX = "refresh.php?index=";
         String SORT_LIST = "sort_list.php";
+        String SORT_CONTENT_LIST = "sort_content_list.php?contentId=";
     }
 
 

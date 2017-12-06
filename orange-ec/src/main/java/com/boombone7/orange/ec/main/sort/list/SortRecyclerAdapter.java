@@ -6,13 +6,17 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
 import com.boombone7.core.I;
+import com.boombone7.core.delegates.OrangeDelegate;
 import com.boombone7.core.ui.recycler.MultipleItemEntity;
 import com.boombone7.core.ui.recycler.MultipleRecyclerAdapter;
 import com.boombone7.core.ui.recycler.MultipleViewHolder;
 import com.boombone7.orange.ec.R;
 import com.boombone7.orange.ec.main.sort.SortDelegate;
+import com.boombone7.orange.ec.main.sort.content.ContentDelegate;
 
 import java.util.List;
+
+import me.yokeyword.fragmentation.SupportHelper;
 
 /**
  * @author Ting
@@ -56,6 +60,7 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
 
                             final int contentId = getData().get(currentPosition)
                                     .getField(I.MultipleFields.ID);
+                            showContent(contentId);
                         }
 
                     }
@@ -76,6 +81,19 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
                 break;
             default:
                 break;
+        }
+    }
+
+    private void showContent(int contentId) {
+        final ContentDelegate delegate=ContentDelegate.newInstance(contentId);
+        switchContent(delegate);
+    }
+
+    private void switchContent(ContentDelegate delegate) {
+        final OrangeDelegate contentDelegate =
+                SupportHelper.findFragment(DELEGATE.getChildFragmentManager(), ContentDelegate.class);
+        if (contentDelegate !=null){
+            contentDelegate.getSupportDelegate().replaceFragment(delegate,false);
         }
     }
 }
