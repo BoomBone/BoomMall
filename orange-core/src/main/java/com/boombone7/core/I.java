@@ -94,6 +94,7 @@ public interface I {
         String HOST_API = "http://114.67.235.114/RestServer/api/";
         String INDEX = "index.php";
         String REFRESH_INDEX = "refresh.php?index=";
+        String SORT_LIST = "sort_list.php";
     }
 
 
