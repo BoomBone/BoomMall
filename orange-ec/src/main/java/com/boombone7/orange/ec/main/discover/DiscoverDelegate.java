@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.boombone7.core.delegates.bottom.BottomItemDelegate;
+import com.boombone7.core.delegates.web.IPageLoadListener;
 import com.boombone7.core.delegates.web.WebDelegate;
 import com.boombone7.core.delegates.web.WebDelegateImpl;
 import com.boombone7.orange.ec.R;
@@ -32,7 +33,7 @@ public class DiscoverDelegate extends BottomItemDelegate{
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        final WebDelegate delegate = WebDelegateImpl.create("index.html");
+        final WebDelegateImpl delegate = WebDelegateImpl.create("index.html");
         delegate.setTopDelegate(this.getParentDelegate());
         loadRootFragment(R.id.web_discovery_container,delegate);
     }

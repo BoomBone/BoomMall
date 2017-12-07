@@ -18,7 +18,13 @@ import com.boombone7.core.delegates.web.route.Router;
 
 public class WebDelegateImpl extends WebDelegate {
 
-    public static WebDelegateImpl create(String url){
+    private IPageLoadListener mIPageLoadListener = null;
+
+    public void setmIPageLoadListener(IPageLoadListener listener) {
+        this.mIPageLoadListener = listener;
+    }
+
+    public static WebDelegateImpl create(String url) {
         final Bundle args = new Bundle();
         args.putString(I.RouteKeys.URL, url);
         final WebDelegateImpl delegate = new WebDelegateImpl();
@@ -34,7 +40,7 @@ public class WebDelegateImpl extends WebDelegate {
     @Override
     public WebViewClient initWebViewClient() {
         final WebViewClientImpl client = new WebViewClientImpl(this);
-
+        client.setIPageLoadListener(mIPageLoadListener);
         return client;
     }
 
@@ -50,9 +56,9 @@ public class WebDelegateImpl extends WebDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        if (getUrl()!=null){
+        if (getUrl() != null) {
             //用原生的方式模拟web跳转并进行页面加载
-            Router.getInstatnce().loadPage(this,getUrl());
+            Router.getInstatnce().loadPage(this, getUrl());
         }
     }
 

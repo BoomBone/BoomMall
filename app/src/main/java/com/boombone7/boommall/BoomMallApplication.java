@@ -25,6 +25,7 @@ public class BoomMallApplication extends Application {
                 .withIcon(new FontEcModule())
                 .withWeChatAppId("")
                 .withWeChatAppSecret("")
+                .withJavascriptInterface("orange")
                 .withApiHost(I.URL.HOST_API)
                 .withWebEvent("test",new TestEvent())
                 .configure();
