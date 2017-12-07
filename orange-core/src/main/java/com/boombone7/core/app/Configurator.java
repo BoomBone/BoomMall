@@ -112,6 +112,12 @@ public class Configurator {
         return this;
     }
 
+    //浏览器加载host
+    public Configurator withWebHost(String webHost){
+        ORANGE_CONFIGS.put(I.Configkey.WEB_HOST, webHost);
+        return this;
+    }
+
     private void checkConfiguration(){
         final boolean isReady = (boolean) ORANGE_CONFIGS.get(I.Configkey.CONFIG_READY);
         if (!isReady){

@@ -17,6 +17,7 @@ public interface I {
         String WE_CHAT_APP_SECRET = "WE_CHAT_APP_SECRET";
         String ACTIVITY = "ACTIVITY";
         String JAVASCRIPT_INTERFACE = "JAVASCRIPT_INTERFACE";
+        String WEB_HOST = "WEB_HOST";
     }
 
     interface HttpMethod {
