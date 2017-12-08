@@ -98,11 +98,20 @@ public interface I {
         String REFRESH_INDEX = "refresh.php?index=";
         String SORT_LIST = "sort_list.php";
         String SORT_CONTENT_LIST = "sort_content_list.php?contentId=";
+        String SHOP_CART = "shop_cart.php";
     }
 
-    interface RouteKeys{
+    interface RouteKeys {
         String URL = "URL";
     }
 
-
+    interface ShopCart {
+        int SHOP_CART_ITEM = 6;
+        String TITLE = "TITLE";
+        String DESC = "DESC";
+        String COUNT = "COUNT";
+        String PRICE = "PRICE";
+        String IS_SELECTED = "IS_SELECTED";
+        String POSITION = "POSITION";
+    }
 }
