@@ -1,9 +1,13 @@
 package com.boombone7.orange.ec.main.cart;
 
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.View;
 
 import com.boombone7.core.I;
+import com.boombone7.core.app.Orange;
 import com.boombone7.core.ui.recycler.MultipleItemEntity;
 import com.boombone7.core.ui.recycler.MultipleRecyclerAdapter;
 import com.boombone7.core.ui.recycler.MultipleViewHolder;
@@ -22,6 +26,8 @@ import java.util.List;
  */
 
 public class ShopCartAdapter extends MultipleRecyclerAdapter {
+
+    private boolean mIsSelectedAll = false;
     private static final RequestOptions OPTIONS = new RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
@@ -33,7 +39,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
     }
 
     @Override
-    protected void convert(MultipleViewHolder helper, MultipleItemEntity item) {
+    protected void convert(MultipleViewHolder helper, final MultipleItemEntity item) {
         super.convert(helper, item);
         switch (helper.getItemViewType()){
             case I.ShopCart.SHOP_CART_ITEM:
@@ -63,6 +69,32 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                         .load(thumb)
                         .apply(OPTIONS)
                         .into(imgThumb);
+
+                //在左侧勾勾渲染之前改变全选与否状态
+                item.setField(I.ShopCart.IS_SELECTED, mIsSelectedAll);
+                final boolean isSelected = item.getField(I.ShopCart.IS_SELECTED);
+                if (isSelected){
+                    iconIsSelected.setTextColor
+                            (ContextCompat.getColor(Orange.getApplicationContext(), R.color.app_main));
+                }else{
+                    iconIsSelected.setTextColor(Color.GRAY);
+                }
+
+                //添加左侧勾勾的点击事件
+                iconIsSelected.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final boolean currentSelected = item.getField(I.ShopCart.IS_SELECTED);
+                        if (currentSelected){
+                            iconIsSelected.setTextColor(Color.GRAY);
+                            item.setField(I.ShopCart.IS_SELECTED, false);
+                        }else{
+                            iconIsSelected.setTextColor
+                                    (ContextCompat.getColor(Orange.getApplicationContext(), R.color.app_main));
+                            item.setField(I.ShopCart.IS_SELECTED, true);
+                        }
+                    }
+                });
                 break;
             default:
                 break;
