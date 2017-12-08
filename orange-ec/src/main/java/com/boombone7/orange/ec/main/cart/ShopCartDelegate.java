@@ -9,14 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.boombone7.core.I;
 import com.boombone7.core.delegates.bottom.BottomItemDelegate;
 import com.boombone7.core.net.RestClient;
 import com.boombone7.core.net.callback.ISuccess;
 import com.boombone7.core.ui.recycler.MultipleItemEntity;
-import com.boombone7.core.util.log.OLog;
 import com.boombone7.orange.ec.R;
 import com.boombone7.orange.ec.R2;
 import com.joanzapata.iconify.widget.IconTextView;
@@ -76,18 +74,26 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
     @OnClick(R2.id.icon_shop_cart_select_all)
     public void onShopSelectedAllClicked() {
         final int tag = (int) mIconShopCartSelectAll.getTag();
-        if(tag == 0){
+        if (tag == 0) {
             mIconShopCartSelectAll.setTextColor
                     (ContextCompat.getColor(getContext(), R.color.app_main));
             mIconShopCartSelectAll.setTag(1);
             mAdapter.setIsSelectAll(true);
             //更新RecyclerView的显示状态
-            mAdapter.notifyItemRangeChanged(0,mAdapter.getItemCount());
-        }else{
+            mAdapter.notifyItemRangeChanged(0, mAdapter.getItemCount());
+        } else {
             mIconShopCartSelectAll.setTextColor(Color.GRAY);
             mIconShopCartSelectAll.setTag(0);
             mAdapter.setIsSelectAll(false);
-            mAdapter.notifyItemRangeChanged(0,mAdapter.getItemCount());
+            mAdapter.notifyItemRangeChanged(0, mAdapter.getItemCount());
         }
+    }
+
+    @OnClick(R2.id.tv_top_shop_cart_clear)
+    public void onMTvTopShopCartClearClicked() {
+    }
+
+    @OnClick(R2.id.tv_top_shop_cart_remove_selected)
+    public void onMTvTopShopCartRemoveSelectedClicked() {
     }
 }
