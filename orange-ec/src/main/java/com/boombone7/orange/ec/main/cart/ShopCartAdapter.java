@@ -100,4 +100,8 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                 break;
         }
     }
+
+    public void setIsSelectAll(boolean selectAll) {
+        this.mIsSelectedAll = selectAll;
+    }
 }
