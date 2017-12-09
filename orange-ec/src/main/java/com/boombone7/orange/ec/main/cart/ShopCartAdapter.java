@@ -40,6 +40,13 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
 
     public ShopCartAdapter(List<MultipleItemEntity> data) {
         super(data);
+        //初始化总价
+        for (MultipleItemEntity entity : data) {
+            final double price = entity.getField(I.ShopCart.PRICE);
+            final int count = entity.getField(I.ShopCart.COUNT);
+            final double total = price * count;
+            mTotalPrice = mTotalPrice + total;
+        }
         addItemType(I.ShopCart.SHOP_CART_ITEM, R.layout.item_shop_cart);
     }
 

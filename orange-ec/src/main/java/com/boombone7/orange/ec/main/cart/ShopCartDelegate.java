@@ -35,19 +35,19 @@ import butterknife.Unbinder;
  * @date 2017/12/7
  */
 
-public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
+public class ShopCartDelegate extends BottomItemDelegate implements ISuccess ,ICartItemListener {
     @BindView(R2.id.rv_shop_cart)
     RecyclerView mRvShopCart = null;
     @BindView(R2.id.icon_shop_cart_select_all)
     IconTextView mIconShopCartSelectAll = null;
     @BindView(R2.id.stub_no_item)
     ViewStubCompat mStubNoItem;
+    @BindView(R2.id.tv_shop_cart_total_price)
+    AppCompatTextView mTvTotalPrice = null;
 
     private ShopCartAdapter mAdapter = null;
     private View stubView = null;
     //购物车数量标记
-    private int mCurrentCount = 0;
-    private int mTotalCount = 0;
     private double mTotalPrice = 0.00;
 
     @Override
@@ -77,9 +77,12 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
                         .setJsonData(response)
                         .convert();
         mAdapter = new ShopCartAdapter(data);
+        mAdapter.setCartItemListener(this);
         final LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRvShopCart.setLayoutManager(manager);
         mRvShopCart.setAdapter(mAdapter);
+        mTotalPrice = mAdapter.getTotalPrice();
+        mTvTotalPrice.setText(String.valueOf(mTotalPrice));
         checkItemCount();
     }
 
@@ -151,5 +154,11 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
         } else {
             mRvShopCart.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onItemClick(double itemTotalPrice) {
+        final double price = mAdapter.getTotalPrice();
+        mTvTotalPrice.setText(String.valueOf(price));
     }
 }
