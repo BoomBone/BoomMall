@@ -20,6 +20,7 @@ import com.boombone7.orange.ec.R2;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,9 +92,33 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
 
     @OnClick(R2.id.tv_top_shop_cart_clear)
     public void onMTvTopShopCartClearClicked() {
+        mAdapter.getData().clear();
+        mAdapter.notifyDataSetChanged();
     }
 
     @OnClick(R2.id.tv_top_shop_cart_remove_selected)
     public void onMTvTopShopCartRemoveSelectedClicked() {
+        final List<MultipleItemEntity> data = mAdapter.getData();
+        //要删除的数据
+        final List<MultipleItemEntity> deleteData = new ArrayList<>();
+        for (MultipleItemEntity entity : data) {
+            final boolean isSelected = entity.getField(I.ShopCart.IS_SELECTED);
+            if (isSelected){
+                deleteData.add(entity);
+            }
+        }
+        for (int i =0;i<deleteData.size();i++){
+            int dataCount = data.size();
+            int currentPosition = deleteData.get(i).getField(I.ShopCart.POSITION);
+            if (currentPosition<data.size()){
+                mAdapter.remove(currentPosition);
+                for (;currentPosition<dataCount-1;currentPosition++){
+                    int reDataPosition = data.get(currentPosition).getField(I.ShopCart.POSITION);
+                    data.get(currentPosition).setField(I.ShopCart.POSITION, reDataPosition-1);
+                }
+            }
+        }
+
+
     }
 }
