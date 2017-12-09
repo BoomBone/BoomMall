@@ -8,6 +8,8 @@ import android.view.View;
 
 import com.boombone7.core.I;
 import com.boombone7.core.app.Orange;
+import com.boombone7.core.net.RestClient;
+import com.boombone7.core.net.callback.ISuccess;
 import com.boombone7.core.ui.recycler.MultipleItemEntity;
 import com.boombone7.core.ui.recycler.MultipleRecyclerAdapter;
 import com.boombone7.core.ui.recycler.MultipleViewHolder;
@@ -28,6 +30,9 @@ import java.util.List;
 public class ShopCartAdapter extends MultipleRecyclerAdapter {
 
     private boolean mIsSelectedAll = false;
+    private ICartItemListener mCartItemListener = null;
+    private double mTotalPrice = 0.00;
+
     private static final RequestOptions OPTIONS = new RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
@@ -95,6 +100,61 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                         }
                     }
                 });
+
+                //添加加减事件
+                iconMinus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final int currentCount = item.getField(I.ShopCart.COUNT);
+                        if (Integer.parseInt(tvCount.getText().toString()) > 1) {
+                            RestClient.builder()
+                                    .url(I.URL.SHOP_CART_COUNT)
+                                    .loader(mContext)
+                                    .params("count", currentCount)
+                                    .success(new ISuccess() {
+                                        @Override
+                                        public void onSuccess(String response) {
+                                            int countNum = Integer.parseInt(tvCount.getText().toString());
+                                            countNum--;
+                                            tvCount.setText(String.valueOf(countNum));
+                                            if (mCartItemListener != null) {
+                                                mTotalPrice = mTotalPrice - price;
+                                                final double itemTotal = countNum * price;
+                                                mCartItemListener.onItemClick(itemTotal);
+                                            }
+                                        }
+                                    })
+                                    .build()
+                                    .post();
+                        }
+                    }
+                });
+
+                iconPlus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final int currentCount = item.getField(I.ShopCart.COUNT);
+                        RestClient.builder()
+                                .url(I.URL.SHOP_CART_COUNT)
+                                .loader(mContext)
+                                .params("count", currentCount)
+                                .success(new ISuccess() {
+                                    @Override
+                                    public void onSuccess(String response) {
+                                        int countNum = Integer.parseInt(tvCount.getText().toString());
+                                        countNum++;
+                                        tvCount.setText(String.valueOf(countNum));
+                                        if (mCartItemListener != null) {
+                                            mTotalPrice = mTotalPrice + price;
+                                            final double itemTotal = countNum * price;
+                                            mCartItemListener.onItemClick(itemTotal);
+                                        }
+                                    }
+                                })
+                                .build()
+                                .post();
+                    }
+                });
                 break;
             default:
                 break;
@@ -103,5 +163,13 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
 
     public void setIsSelectAll(boolean selectAll) {
         this.mIsSelectedAll = selectAll;
+    }
+
+    public void setCartItemListener(ICartItemListener listener) {
+        this.mCartItemListener = listener;
+    }
+
+    public double getTotalPrice() {
+        return mTotalPrice;
     }
 }

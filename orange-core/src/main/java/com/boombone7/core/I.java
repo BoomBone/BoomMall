@@ -99,6 +99,7 @@ public interface I {
         String SORT_LIST = "sort_list.php";
         String SORT_CONTENT_LIST = "sort_content_list.php?contentId=";
         String SHOP_CART = "shop_cart.php";
+        String SHOP_CART_COUNT = "shop_cart_count.php";
     }
 
     interface RouteKeys {

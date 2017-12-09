@@ -45,6 +45,10 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
 
     private ShopCartAdapter mAdapter = null;
     private View stubView = null;
+    //购物车数量标记
+    private int mCurrentCount = 0;
+    private int mTotalCount = 0;
+    private double mTotalPrice = 0.00;
 
     @Override
     public Object setLayout() {
