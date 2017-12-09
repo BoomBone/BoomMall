@@ -4,11 +4,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ViewStubCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.boombone7.core.I;
 import com.boombone7.core.delegates.bottom.BottomItemDelegate;
@@ -37,8 +40,11 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
     RecyclerView mRvShopCart = null;
     @BindView(R2.id.icon_shop_cart_select_all)
     IconTextView mIconShopCartSelectAll = null;
+    @BindView(R2.id.stub_no_item)
+    ViewStubCompat mStubNoItem;
 
     private ShopCartAdapter mAdapter = null;
+    private View stubView = null;
 
     @Override
     public Object setLayout() {
@@ -70,6 +76,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
         final LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRvShopCart.setLayoutManager(manager);
         mRvShopCart.setAdapter(mAdapter);
+        checkItemCount();
     }
 
     @OnClick(R2.id.icon_shop_cart_select_all)
@@ -94,6 +101,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
     public void onMTvTopShopCartClearClicked() {
         mAdapter.getData().clear();
         mAdapter.notifyDataSetChanged();
+        checkItemCount();
     }
 
     @OnClick(R2.id.tv_top_shop_cart_remove_selected)
@@ -103,22 +111,41 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
         final List<MultipleItemEntity> deleteData = new ArrayList<>();
         for (MultipleItemEntity entity : data) {
             final boolean isSelected = entity.getField(I.ShopCart.IS_SELECTED);
-            if (isSelected){
+            if (isSelected) {
                 deleteData.add(entity);
             }
         }
-        for (int i =0;i<deleteData.size();i++){
+        for (int i = 0; i < deleteData.size(); i++) {
             int dataCount = data.size();
             int currentPosition = deleteData.get(i).getField(I.ShopCart.POSITION);
-            if (currentPosition<data.size()){
+            if (currentPosition < data.size()) {
                 mAdapter.remove(currentPosition);
-                for (;currentPosition<dataCount-1;currentPosition++){
+                for (; currentPosition < dataCount - 1; currentPosition++) {
                     int reDataPosition = data.get(currentPosition).getField(I.ShopCart.POSITION);
-                    data.get(currentPosition).setField(I.ShopCart.POSITION, reDataPosition-1);
+                    data.get(currentPosition).setField(I.ShopCart.POSITION, reDataPosition - 1);
                 }
             }
         }
+        checkItemCount();
+    }
 
-
+    private void checkItemCount() {
+        final int count = mAdapter.getItemCount();
+        if (count == 0) {
+            if (stubView ==null){
+                stubView = mStubNoItem.inflate();
+            }
+            final AppCompatTextView tvToBuy =
+                    (AppCompatTextView) stubView.findViewById(R.id.tv_stub_to_buy);
+            tvToBuy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "你该购物啦！", Toast.LENGTH_SHORT).show();
+                }
+            });
+            mRvShopCart.setVisibility(View.GONE);
+        } else {
+            mRvShopCart.setVisibility(View.VISIBLE);
+        }
     }
 }
