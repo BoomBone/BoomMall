@@ -115,4 +115,10 @@ public interface I {
         String IS_SELECTED = "IS_SELECTED";
         String POSITION = "POSITION";
     }
+
+    interface ListItemType {
+        int ITEM_NORMAL = 20;
+        int ITEM_AVATAR = 21;
+        int ITEM_SWITCH = 22;
+    }
 }
