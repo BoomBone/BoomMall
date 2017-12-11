@@ -100,6 +100,7 @@ public interface I {
         String SORT_CONTENT_LIST = "sort_content_list.php?contentId=";
         String SHOP_CART = "shop_cart.php";
         String SHOP_CART_COUNT = "shop_cart_count.php";
+        String ORDER_LIST = "order_list.php";
     }
 
     interface RouteKeys {
@@ -120,5 +121,14 @@ public interface I {
         int ITEM_NORMAL = 20;
         int ITEM_AVATAR = 21;
         int ITEM_SWITCH = 22;
+    }
+
+    interface OrderListItemType{
+        int ITEM_ORDER_LIST = 30;
+    }
+
+    interface OrderItemFields{
+        String PRICE = "PRICE";
+        String TIME = "TIME";
     }
 }

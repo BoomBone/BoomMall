@@ -14,12 +14,14 @@ import com.boombone7.orange.ec.R;
 import com.boombone7.orange.ec.R2;
 import com.boombone7.orange.ec.main.personal.list.ListAdapter;
 import com.boombone7.orange.ec.main.personal.list.ListBean;
+import com.boombone7.orange.ec.main.personal.order.OrderListDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -31,9 +33,30 @@ public class PersonalDelegate extends BottomItemDelegate {
     @BindView(R2.id.rv_personal_setting)
     RecyclerView mRvPersonalSetting;
 
+    public static final String ORDER_TYPE = "ORDER_TYPE";
+    private Bundle mArgs = null;
+
     @Override
     public Object setLayout() {
         return R.layout.delegate_personal;
+    }
+
+    @OnClick(R2.id.tv_all_order)
+    void onAllOrderClick(){
+        mArgs.putString(ORDER_TYPE, "all");
+        startOrderListByType();
+    }
+
+    private void startOrderListByType() {
+        final OrderListDelegate delegate = new OrderListDelegate();
+        delegate.setArguments(mArgs);
+        getParentDelegate().getSupportDelegate().start(delegate);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mArgs = new Bundle();
     }
 
     @Override
