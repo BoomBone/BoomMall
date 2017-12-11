@@ -15,6 +15,7 @@ import com.boombone7.orange.ec.R2;
 import com.boombone7.orange.ec.main.personal.list.ListAdapter;
 import com.boombone7.orange.ec.main.personal.list.ListBean;
 import com.boombone7.orange.ec.main.personal.order.OrderListDelegate;
+import com.boombone7.orange.ec.main.personal.profile.UserProfileDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +42,17 @@ public class PersonalDelegate extends BottomItemDelegate {
         return R.layout.delegate_personal;
     }
 
+    //点击全部订单
     @OnClick(R2.id.tv_all_order)
     void onAllOrderClick(){
         mArgs.putString(ORDER_TYPE, "all");
         startOrderListByType();
+    }
+
+    //点击头像
+    @OnClick(R2.id.img_user_avatar)
+    void onClickAvatar() {
+        getParentDelegate().getSupportDelegate().start(new UserProfileDelegate());
     }
 
     private void startOrderListByType() {
