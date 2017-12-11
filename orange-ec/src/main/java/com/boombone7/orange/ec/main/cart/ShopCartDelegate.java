@@ -13,17 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.boombone7.core.I;
+import com.boombone7.core.app.Orange;
 import com.boombone7.core.delegates.bottom.BottomItemDelegate;
 import com.boombone7.core.net.RestClient;
 import com.boombone7.core.net.callback.ISuccess;
 import com.boombone7.core.ui.recycler.MultipleItemEntity;
+import com.boombone7.core.util.log.OLog;
 import com.boombone7.orange.ec.R;
 import com.boombone7.orange.ec.R2;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.WeakHashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +39,7 @@ import butterknife.Unbinder;
  * @date 2017/12/7
  */
 
-public class ShopCartDelegate extends BottomItemDelegate implements ISuccess ,ICartItemListener {
+public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, ICartItemListener {
     @BindView(R2.id.rv_shop_cart)
     RecyclerView mRvShopCart = null;
     @BindView(R2.id.icon_shop_cart_select_all)
@@ -139,7 +143,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess ,IC
     private void checkItemCount() {
         final int count = mAdapter.getItemCount();
         if (count == 0) {
-            if (stubView ==null){
+            if (stubView == null) {
                 stubView = mStubNoItem.inflate();
             }
             final AppCompatTextView tvToBuy =
@@ -160,5 +164,44 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess ,IC
     public void onItemClick(double itemTotalPrice) {
         final double price = mAdapter.getTotalPrice();
         mTvTotalPrice.setText(String.valueOf(price));
+    }
+
+    //结算
+    @OnClick(R2.id.tv_shop_cart_pay)
+    public void onPayClicked() {
+        //TODO 编写自己的支付api
+        Toast.makeText(getContext(), "支付功能暂未开放", Toast.LENGTH_SHORT).show();
+        createOrder();
+
+    }
+
+    //创建订单，注意，和支付是没有关系的
+    private void createOrder() {
+        final String orderUrl = "你的生成订单的API";
+        /**
+         * 上传到自己服务器参数
+         * userid amount comment type ordertype isanonymous followeduser
+         * 1，服务器请求支付宝服务器
+         */
+        final WeakHashMap<String, Object> orderParams = new WeakHashMap<>();
+        //加入你的参数
+        RestClient.builder()
+                .url(orderUrl)
+                .loader(getContext())
+                .params(orderParams)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        //进行具体的支付
+                        OLog.d("ORDER", response);
+                        final int orderId = JSON.parseObject(response).getInteger("result");
+//                        FastPay.create(ShopCartDelegate.this)
+//                                .setPayResultListener(ShopCartDelegate.this)
+//                                .setOrderId(orderId)
+//                                .beginPayDialog();
+                    }
+                })
+                .build()
+                .post();
     }
 }
