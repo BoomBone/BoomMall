@@ -11,6 +11,9 @@ import com.boombone7.core.I;
 import com.boombone7.core.delegates.web.client.WebViewClientImpl;
 import com.boombone7.core.delegates.web.route.Router;
 
+import me.yokeyword.fragmentation.ExtraTransaction;
+import me.yokeyword.fragmentation.SupportFragmentDelegate;
+
 /**
  * @author Ting
  * @date 2017/12/6.
@@ -20,7 +23,7 @@ public class WebDelegateImpl extends WebDelegate {
 
     private IPageLoadListener mIPageLoadListener = null;
 
-    public void setmIPageLoadListener(IPageLoadListener listener) {
+    public void setPageLoadListener(IPageLoadListener listener) {
         this.mIPageLoadListener = listener;
     }
 
@@ -66,4 +69,5 @@ public class WebDelegateImpl extends WebDelegate {
     public IWebViewInitializer setInitializer() {
         return this;
     }
+
 }

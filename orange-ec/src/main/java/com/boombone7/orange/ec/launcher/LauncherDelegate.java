@@ -71,7 +71,7 @@ public class LauncherDelegate extends OrangeDelegate implements ITimerListener {
     //判断是否显示滚动页面
     private void checkIsShowScroll(){
         if (!OrangePreference.getAppFlag(I.ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP)){
-            start(new LauncherScrollDelegate(),SINGLETASK);
+            getSupportDelegate().start(new LauncherScrollDelegate(),SINGLETASK);
         }else{
             //TODO 判断用户是否登录
             AccountManager.checkAccount(new IUserChecker() {
