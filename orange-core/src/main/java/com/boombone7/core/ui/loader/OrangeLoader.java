@@ -24,7 +24,7 @@ public class OrangeLoader {
 
     private static final ArrayList<AppCompatDialog> LOADERS = new ArrayList<>();
 
-    private static final String DEFAULT_LOADER = I.LoaderStyle.BallSpinFadeLoaderIndicator;
+    private static final String DEFAULT_LOADER = I.LoaderStyle.BallClipRotatePulseIndicator;
 
     public static void showLoading(Context context, String type) {
 
