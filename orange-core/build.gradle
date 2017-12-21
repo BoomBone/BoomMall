@@ -104,4 +104,7 @@ dependencies {
         exclude module: "support-v13"
     }
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.1.0"
+
+    //utilcode
+    compile 'com.blankj:utilcode:1.9.12'
 }

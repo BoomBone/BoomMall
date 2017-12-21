@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 
+import com.blankj.utilcode.util.Utils;
 import com.boombone7.core.I;
 import com.boombone7.core.delegates.web.event.Event;
 import com.boombone7.core.delegates.web.event.EventManager;

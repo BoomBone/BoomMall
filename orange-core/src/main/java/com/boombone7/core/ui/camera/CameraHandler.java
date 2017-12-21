@@ -1,15 +1,25 @@
 package com.boombone7.core.ui.camera;
 
+import android.content.ContentValues;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.blankj.utilcode.util.FileUtils;
+import com.boombone7.core.I;
 import com.boombone7.core.R;
 import com.boombone7.core.delegates.PermissionCheckerDelegate;
+import com.boombone7.core.util.file.FileUtil;
+
+import java.io.File;
 
 import butterknife.OnClick;
 
@@ -21,11 +31,11 @@ import butterknife.OnClick;
 
 public class CameraHandler implements View.OnClickListener {
     private final AlertDialog DIALOG;
-    private final PermissionCheckerDelegate Delegate;
+    private final PermissionCheckerDelegate DELEGATE;
 
     public CameraHandler( PermissionCheckerDelegate delegate) {
         this.DIALOG = new AlertDialog.Builder(delegate.getContext()).create();
-        Delegate = delegate;
+        DELEGATE = delegate;
     }
 
     final void beginCameraDialog() {
@@ -64,13 +74,47 @@ public class CameraHandler implements View.OnClickListener {
         }
     }
 
+    /**
+     * 相册选取
+     */
     private void pickPhoto() {
+        final Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        DELEGATE.startActivityForResult
+                (Intent.createChooser(intent, "选择获取图片的方式"), I.RequestCodes.PICK_PHOTO);
     }
 
     /**
      * 拍照
      */
     private void takePhoto() {
+        final String currentPhotoName = getPhotoName();
+        final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        final File tempFile = new File(FileUtil.CAMERA_PHOTO_DIR, currentPhotoName);
 
+        //兼容7.0及以上的写法
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            final ContentValues contentValues = new ContentValues(1);
+            contentValues.put(MediaStore.Images.Media.DATA, tempFile.getPath());
+            final Uri uri = DELEGATE.getContext().getContentResolver().
+                    insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            //需要讲Uri路径转化为实际路径
+            final File realFile =
+                    FileUtils.getFileByPath(FileUtil.getRealFilePath(DELEGATE.getContext(), uri));
+            final Uri realUri = Uri.fromFile(realFile);
+            CameraImageBean.getInstance().setPath(realUri);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        } else {
+            final Uri fileUri = Uri.fromFile(tempFile);
+            CameraImageBean.getInstance().setPath(fileUri);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        }
+        DELEGATE.startActivityForResult(intent, I.RequestCodes.TAKE_PHOTO);
+    }
+
+    private String getPhotoName() {
+        return FileUtil.getFileNameByTime("IMG", "jpg");
     }
 }

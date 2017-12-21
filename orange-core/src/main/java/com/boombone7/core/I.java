@@ -1,5 +1,7 @@
 package com.boombone7.core;
 
+import com.yalantis.ucrop.UCrop;
+
 /**
  * @author Ting
  * @date 2017/11/10
@@ -123,12 +125,20 @@ public interface I {
         int ITEM_SWITCH = 22;
     }
 
-    interface OrderListItemType{
+    interface OrderListItemType {
         int ITEM_ORDER_LIST = 30;
     }
 
-    interface OrderItemFields{
+    interface OrderItemFields {
         String PRICE = "PRICE";
         String TIME = "TIME";
+    }
+
+    interface RequestCodes {
+        int TAKE_PHOTO = 4;
+        int PICK_PHOTO = 5;
+        int CROP_PHOTO = UCrop.REQUEST_CROP;
+        int CROP_ERROR = UCrop.RESULT_ERROR;
+        int SCAN = 7;
     }
 }

@@ -2,6 +2,7 @@ package com.boombone7.boommall;
 
 import android.app.Application;
 
+import com.blankj.utilcode.util.Utils;
 import com.boombone7.boommall.event.TestEvent;
 import com.boombone7.core.I;
 import com.boombone7.core.app.Orange;
@@ -34,5 +35,6 @@ public class BoomMallApplication extends Application {
                 .withWebEvent("test",new TestEvent())
                 .configure();
         DatabaseManager.getInstance().init(this);
+        Utils.init(this);
     }
 }
