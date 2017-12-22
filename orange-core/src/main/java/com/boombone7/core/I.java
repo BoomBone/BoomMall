@@ -141,4 +141,11 @@ public interface I {
         int CROP_ERROR = UCrop.RESULT_ERROR;
         int SCAN = 7;
     }
+
+    interface CallbackType {
+        String ON_CROP = "ON_CROP";
+        String TAG_OPEN_PUSH = "TAG_OPEN_PUSH";
+        String TAG_STOP_PUSH = "TAG_STOP_PUSH";
+        String ON_SCAN = "ON_SCAN";
+    }
 }

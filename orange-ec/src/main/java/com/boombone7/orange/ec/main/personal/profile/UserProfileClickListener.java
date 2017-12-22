@@ -1,13 +1,18 @@
 package com.boombone7.orange.ec.main.personal.profile;
 
 import android.content.DialogInterface;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
+import com.boombone7.core.I;
 import com.boombone7.core.app.Orange;
 import com.boombone7.core.delegates.OrangeDelegate;
 import com.boombone7.core.ui.date.DateDialogUtil;
+import com.boombone7.core.util.callback.CallbackManager;
+import com.boombone7.core.util.callback.IGlobalCallback;
+import com.boombone7.core.util.log.OLog;
 import com.boombone7.orange.ec.R;
 import com.boombone7.orange.ec.main.personal.list.ListBean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -33,6 +38,16 @@ public class UserProfileClickListener extends SimpleClickListener {
         final int id = bean.getId();
         switch (id){
             case 1:
+                OLog.d("CROP","开启照相机或者选择图片");
+                //开启照相机或者选这图片
+                CallbackManager.getInstance()
+                        .addCallback(I.CallbackType.ON_CROP, new IGlobalCallback() {
+                            @Override
+                            public void executeCallback(@Nullable Object args) {
+                                OLog.d("ON_CROP",args);
+                            }
+                        });
+                DELEGATE.startCameraWithCheck();
                 break;
             case 2:
                 final OrangeDelegate nameDelegate = bean.getDelegate();

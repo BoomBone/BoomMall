@@ -18,6 +18,8 @@ import java.util.HashMap;
 
 import okhttp3.Interceptor;
 
+import static com.boombone7.core.app.Orange.getApplicationContext;
+
 /**
  * @author Ting
  * @date 2017/11/10
