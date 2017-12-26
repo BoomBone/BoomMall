@@ -57,8 +57,6 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
         Toast.makeText(getContext(), "不允许读取，不能进行剪裁", Toast.LENGTH_LONG).show();
     }
 
-
-
     @OnNeverAskAgain(Manifest.permission.CAMERA)
     void onCameraNever() {
         Toast.makeText(getContext(), "永久拒绝权限", Toast.LENGTH_LONG).show();

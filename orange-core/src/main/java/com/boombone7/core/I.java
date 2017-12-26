@@ -148,4 +148,9 @@ public interface I {
         String TAG_STOP_PUSH = "TAG_STOP_PUSH";
         String ON_SCAN = "ON_SCAN";
     }
+
+    interface UploadConfig{
+        String API_HOST = "你的服务器域名";
+        String UPLOAD_IMG = API_HOST + "你的上传地址";
+    }
 }
