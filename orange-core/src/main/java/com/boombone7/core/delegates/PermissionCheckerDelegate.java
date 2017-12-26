@@ -3,10 +3,12 @@ package com.boombone7.core.delegates;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
@@ -34,13 +36,14 @@ import permissions.dispatcher.RuntimePermissions;
 public abstract class PermissionCheckerDelegate extends BaseDelegate {
 
     //不是直接调用方法
-    @NeedsPermission(Manifest.permission.CAMERA)
-    void startCamera(){
+    @NeedsPermission({Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void startCamera() {
         OrangeCamera.start(this);
     }
 
+
     //真正的调用方法
-    public void startCameraWithCheck(){
+    public void startCameraWithCheck() {
         PermissionCheckerDelegatePermissionsDispatcher.startCameraWithPermissionCheck(this);
     }
 
@@ -48,6 +51,13 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
     void onCameraDenied() {
         Toast.makeText(getContext(), "不允许拍照", Toast.LENGTH_LONG).show();
     }
+
+    @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    void onWriteDenied() {
+        Toast.makeText(getContext(), "不允许读取，不能进行剪裁", Toast.LENGTH_LONG).show();
+    }
+
+
 
     @OnNeverAskAgain(Manifest.permission.CAMERA)
     void onCameraNever() {
@@ -82,7 +92,7 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionCheckerDelegatePermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+        PermissionCheckerDelegatePermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     @Override
@@ -92,11 +102,27 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
             switch (requestCode) {
                 case I.RequestCodes.TAKE_PHOTO:
                     final Uri resultUri = CameraImageBean.getInstance().getPath();
+                    if (ContextCompat.checkSelfPermission(getContext(),
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        //拥有读写文件权限
+                        OLog.d("CROP", "拥有读写文件权限");
+                    }else {
+                        OLog.d("CROP", "没有读写文件权限");
+                    }
                     UCrop.of(resultUri, resultUri)
                             .withMaxResultSize(400, 400)
                             .start(getContext(), this);
                     break;
                 case I.RequestCodes.PICK_PHOTO:
+                    if (ContextCompat.checkSelfPermission(getContext(),
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        //拥有读写文件权限
+                        OLog.d("CROP", "拥有读写文件权限");
+                    }else {
+                        OLog.d("CROP", "没有读写文件权限");
+                    }
                     if (data != null) {
                         final Uri pickPath = data.getData();
                         //从相册选择后需要有个路径存放剪裁过的图片
@@ -123,8 +149,7 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
                 default:
                     break;
             }
-        }
-        else if (resultCode == UCrop.RESULT_ERROR) {
+        } else if (resultCode == UCrop.RESULT_ERROR) {
             final Throwable cropError = UCrop.getError(data);
         }
     }
