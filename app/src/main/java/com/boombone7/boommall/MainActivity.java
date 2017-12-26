@@ -18,6 +18,7 @@ import com.boombone7.orange.ec.sign.ISignListener;
 import com.boombone7.orange.ec.sign.SignInDelegate;
 import com.boombone7.orange.ec.sign.SignUpDelegate;
 
+import cn.jpush.android.api.JPushInterface;
 import qiu.niorgai.StatusBarCompat;
 
 import static com.boombone7.core.I.OnLauncherFinishTag.NOT_SIGNED;
@@ -39,6 +40,18 @@ public class MainActivity extends ProxyActivity implements ISignListener, ILaunc
         Orange.getConfigurator().withActivity(this);
         StatusBarCompat.translucentStatusBar(this,true);
         //TODO 清单文件设置成竖屏
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
     }
 
     @Override

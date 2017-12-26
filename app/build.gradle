@@ -10,7 +10,21 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "44f19c90af627ec07179e0cb",
+                JPUSH_CHANNEL: "developer-default",
+        ]
     }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -30,4 +44,6 @@ dependencies {
     compile project(':orange-ec')
     annotationProcessor project(':orange-compiler')
     compile project(':orange-annotations')
+    compile 'cn.jiguang.sdk:jpush:3.0.1'
+    compile 'cn.jiguang.sdk:jcore:1.1.0'
 }

@@ -12,6 +12,8 @@ import com.boombone7.orange.ec.database.DatabaseManager;
 import com.boombone7.orange.ec.icon.FontEcModule;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  *
  * @author Ting
@@ -36,5 +38,9 @@ public class BoomMallApplication extends Application {
                 .configure();
         DatabaseManager.getInstance().init(this);
         Utils.init(this);
+
+        //开启极光推送
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 }
