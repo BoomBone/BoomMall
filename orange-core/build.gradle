@@ -31,6 +31,7 @@ dependencies {
     compile 'com.android.support:support-v4:+'
     compile 'com.android.support:appcompat-v7:+'
     compile 'com.android.support:design:+'
+    compile 'com.android.support:cardview-v7:+'
     testCompile 'junit:junit:4.12'
     //网络请求依赖
     compile 'com.squareup.okio:okio:1.13.0'
@@ -46,65 +47,49 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile project(':orange-annotations')
-
     //字体图标'
     compile 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
     compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
-
     //Fragment依赖
     compile 'me.yokeyword:fragmentation:1.1.9'
     compile 'me.yokeyword:fragmentation-swipeback:1.1.9'
-
     //butterknife依赖
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     //Banner依赖
     compile 'com.bigkoo:convenientbanner:2.0.5'
     compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
-
     //JSON依赖Android版
     compile 'com.alibaba:fastjson:1.1.57.android'
-
     //Log
     compile 'com.orhanobut:logger:2.1.1'
-
     //数据库依赖
     compile 'org.greenrobot:greendao-generator:3.2.2'
     compile 'org.greenrobot:greendao:3.2.2'
-
     //微信依赖（包含统计）
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.4.0'
-
     //Google AutoValue
     provided 'com.google.auto.value:auto-value:1.4.1'
     annotationProcessor "com.google.auto.value:auto-value:1.4.1"
-
     //RecyclerView依赖
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
-
     //RecyclerView 分割线
     compile 'com.choices.divider:RecyclerView_Divider:1.0.0'
-
     //Glide
     compile 'com.github.bumptech.glide:glide:4.3.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.0'
-
     //沉浸式状态栏
-    compile ('com.github.niorgai:StatusBarCompat:2.1.4', {
+    compile('com.github.niorgai:StatusBarCompat:2.1.4', {
         exclude group: 'com.android.support'
     })
-
     //图片剪裁
     compile 'com.github.yalantis:ucrop:2.2.1-native'
-
     //动态权限处理
-    compile("com.github.hotchemi:permissionsdispatcher:3.1.0") {
+    compile('com.github.hotchemi:permissionsdispatcher:3.1.0') {
         // if you don't use android.app.Fragment you can exclude support for them
         exclude module: "support-v13"
     }
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.1.0"
-
     //utilcode
     compile 'com.blankj:utilcode:1.9.12'
 }

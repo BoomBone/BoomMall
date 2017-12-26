@@ -12,6 +12,7 @@ import com.boombone7.core.I;
 import com.boombone7.core.delegates.bottom.BottomItemDelegate;
 import com.boombone7.orange.ec.R;
 import com.boombone7.orange.ec.R2;
+import com.boombone7.orange.ec.main.personal.address.AddressDelegate;
 import com.boombone7.orange.ec.main.personal.list.ListAdapter;
 import com.boombone7.orange.ec.main.personal.list.ListBean;
 import com.boombone7.orange.ec.main.personal.order.OrderListDelegate;
@@ -44,7 +45,7 @@ public class PersonalDelegate extends BottomItemDelegate {
 
     //点击全部订单
     @OnClick(R2.id.tv_all_order)
-    void onAllOrderClick(){
+    void onAllOrderClick() {
         mArgs.putString(ORDER_TYPE, "all");
         startOrderListByType();
     }
@@ -72,7 +73,7 @@ public class PersonalDelegate extends BottomItemDelegate {
         final ListBean address = new ListBean.Builder()
                 .setItemType(I.ListItemType.ITEM_NORMAL)
                 .setId(1)
-//                .setDelegate(new AddressDelegate())
+                .setDelegate(new AddressDelegate())
                 .setText("收货地址")
                 .build();
 
@@ -92,5 +93,6 @@ public class PersonalDelegate extends BottomItemDelegate {
         mRvPersonalSetting.setLayoutManager(manager);
         final ListAdapter adapter = new ListAdapter(data);
         mRvPersonalSetting.setAdapter(adapter);
+        mRvPersonalSetting.addOnItemTouchListener(new PersonalClickListener(this));
     }
 }

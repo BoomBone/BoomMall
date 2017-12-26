@@ -103,6 +103,7 @@ public interface I {
         String SHOP_CART = "shop_cart.php";
         String SHOP_CART_COUNT = "shop_cart_count.php";
         String ORDER_LIST = "order_list.php";
+        String ADDRESS = "address.php";
     }
 
     interface RouteKeys {
@@ -149,8 +150,17 @@ public interface I {
         String ON_SCAN = "ON_SCAN";
     }
 
-    interface UploadConfig{
+    interface UploadConfig {
         String API_HOST = "你的服务器域名";
         String UPLOAD_IMG = API_HOST + "你的上传地址";
+    }
+
+    interface AddressItemType {
+        int ITEM_ADDRESS = 40;
+    }
+
+    interface AddressItemFields {
+        String PHONE = "PHONE";
+        String ADDRESS = "ADDRESS";
     }
 }
