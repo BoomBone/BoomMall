@@ -1,7 +1,9 @@
 package com.boombone7.boommall;
 
 import android.app.Application;
+import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.multidex.MultiDex;
 
 import com.blankj.utilcode.util.Utils;
 import com.boombone7.boommall.event.TestEvent;
@@ -65,5 +67,11 @@ public class BoomMallApplication extends Application {
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }
