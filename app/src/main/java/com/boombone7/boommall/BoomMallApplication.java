@@ -1,6 +1,7 @@
 package com.boombone7.boommall;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.util.Utils;
 import com.boombone7.boommall.event.TestEvent;
@@ -8,6 +9,8 @@ import com.boombone7.core.I;
 import com.boombone7.core.app.Orange;
 import com.boombone7.core.net.interceptors.DebugInterceptor;
 import com.boombone7.core.net.rx.AddCookieInterceptor;
+import com.boombone7.core.util.callback.CallbackManager;
+import com.boombone7.core.util.callback.IGlobalCallback;
 import com.boombone7.orange.ec.database.DatabaseManager;
 import com.boombone7.orange.ec.icon.FontEcModule;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
@@ -42,5 +45,25 @@ public class BoomMallApplication extends Application {
         //开启极光推送
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+
+        CallbackManager.getInstance()
+                .addCallback(I.CallbackType.TAG_OPEN_PUSH, new IGlobalCallback() {
+                    @Override
+                    public void executeCallback(@Nullable Object args) {
+                        if (JPushInterface.isPushStopped(Orange.getApplicationContext())) {
+                            //开启极光推送
+                            JPushInterface.setDebugMode(true);
+                            JPushInterface.init(Orange.getApplicationContext());
+                        }
+                    }
+                })
+                .addCallback(I.CallbackType.TAG_STOP_PUSH, new IGlobalCallback() {
+                    @Override
+                    public void executeCallback(@Nullable Object args) {
+                        if (!JPushInterface.isPushStopped(Orange.getApplicationContext())) {
+                            JPushInterface.stopPush(Orange.getApplicationContext());
+                        }
+                    }
+                });
     }
 }

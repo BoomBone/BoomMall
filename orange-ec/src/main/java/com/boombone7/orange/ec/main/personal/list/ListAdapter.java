@@ -1,5 +1,6 @@
 package com.boombone7.orange.ec.main.personal.list;
 
+import android.support.v7.widget.SwitchCompat;
 import android.widget.ImageView;
 
 import com.boombone7.core.I;
@@ -28,6 +29,7 @@ public class ListAdapter extends BaseMultiItemQuickAdapter<ListBean, BaseViewHol
         super(data);
         addItemType(I.ListItemType.ITEM_NORMAL, R.layout.arrow_item_layout);
         addItemType(I.ListItemType.ITEM_AVATAR, R.layout.arrow_item_avatar);
+        addItemType(I.ListItemType.ITEM_SWITCH,R.layout.arrow_switch_layout);
 
     }
 
@@ -43,6 +45,12 @@ public class ListAdapter extends BaseMultiItemQuickAdapter<ListBean, BaseViewHol
                         .load(item.getImageUrl())
                         .apply(OPTIONS)
                         .into((ImageView) helper.getView(R.id.img_arrow_avatar));
+                break;
+            case I.ListItemType.ITEM_SWITCH:
+                helper.setText(R.id.tv_arrow_switch_text,item.getText());
+                final SwitchCompat switchCompat = helper.getView(R.id.list_item_switch);
+                switchCompat.setChecked(true);
+                switchCompat.setOnCheckedChangeListener(item.getOnCheckedChangeListener());
                 break;
             default:
                 break;

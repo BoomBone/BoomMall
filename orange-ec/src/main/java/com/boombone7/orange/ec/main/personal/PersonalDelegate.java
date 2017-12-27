@@ -17,6 +17,7 @@ import com.boombone7.orange.ec.main.personal.list.ListAdapter;
 import com.boombone7.orange.ec.main.personal.list.ListBean;
 import com.boombone7.orange.ec.main.personal.order.OrderListDelegate;
 import com.boombone7.orange.ec.main.personal.profile.UserProfileDelegate;
+import com.boombone7.orange.ec.main.personal.setting.SettingsDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +81,7 @@ public class PersonalDelegate extends BottomItemDelegate {
         final ListBean system = new ListBean.Builder()
                 .setItemType(I.ListItemType.ITEM_NORMAL)
                 .setId(2)
-//                .setDelegate(new SettingsDelegate())
+                .setDelegate(new SettingsDelegate())
                 .setText("系统设置")
                 .build();
 

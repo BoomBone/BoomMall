@@ -104,6 +104,7 @@ public interface I {
         String SHOP_CART_COUNT = "shop_cart_count.php";
         String ORDER_LIST = "order_list.php";
         String ADDRESS = "address.php";
+        String ABOUT = "about.php";
     }
 
     interface RouteKeys {
