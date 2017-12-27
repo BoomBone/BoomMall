@@ -54,8 +54,8 @@ dependencies {
     compile 'me.yokeyword:fragmentation:1.1.9'
     compile 'me.yokeyword:fragmentation-swipeback:1.1.9'
     //butterknife依赖
-    compile 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     //Banner依赖
     compile 'com.bigkoo:convenientbanner:2.0.5'
     compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
@@ -67,7 +67,7 @@ dependencies {
     compile 'org.greenrobot:greendao-generator:3.2.2'
     compile 'org.greenrobot:greendao:3.2.2'
     //微信依赖（包含统计）
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.4.0'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     //Google AutoValue
     provided 'com.google.auto.value:auto-value:1.4.1'
     annotationProcessor "com.google.auto.value:auto-value:1.4.1"
