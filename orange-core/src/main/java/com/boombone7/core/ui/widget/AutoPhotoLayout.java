@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 
 import com.boombone7.core.R;
@@ -39,6 +40,9 @@ public class AutoPhotoLayout extends LinearLayoutCompat {
     private final ArrayList<ArrayList<View>> ALL_VIEWS = new ArrayList<>();
     private final ArrayList<Integer> LINE_HEIGHTS = new ArrayList<>();
 
+    //防止多次的测量和布局过程
+    private boolean mIsOnceInitOnMeasure = true;
+    private boolean mHasInitOnLayout = false;
 
     public AutoPhotoLayout(Context context) {
         this(context, null);
@@ -56,5 +60,86 @@ public class AutoPhotoLayout extends LinearLayoutCompat {
         mImageMargin = typedArray.getInt(R.styleable.camera_flow_layout_item_margin, 0);
         mIconSize = typedArray.getDimension(R.styleable.camera_flow_layout_icon_size, 20);
         typedArray.recycle();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        final int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
+        final int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
+        final int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
+        final int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
+        //wrap_content
+        int width = 0;
+        int height = 0;
+        //记录每一行的宽度与高度
+        int lineWidth = 0;
+        int lineHeight = 0;
+        //得到内部元素个数
+        int cCount = getChildCount();
+        for (int i = 0; i < cCount; i++) {
+            final View child = getChildAt(i);
+            //测量子View的宽和高
+            measureChild(child, widthMeasureSpec, heightMeasureSpec);
+            //得搭配LayoutParams
+            final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
+            //子View占据的宽度
+            final int childWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
+            //子View占据的高度
+            final int childHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
+            //换行
+            if (lineWidth + childWidth > sizeWidth - getPaddingLeft() - getPaddingRight()) {
+                //对比得到最大宽度
+                width = Math.max(width, lineWidth);
+                //重置lineWidth
+                lineWidth = childWidth;
+                height += lineHeight;
+                lineHeight = childHeight;
+            } else {
+                //未换行
+                //叠加行宽
+                lineWidth += childWidth;
+                //得到当前最大的高度
+                lineHeight = Math.max(lineHeight, childHeight);
+            }
+            //最后一个子控件
+            if (i == cCount - 1) {
+                width = Math.max(lineWidth, width);
+                //判断是否超过最大拍照限制
+                height += lineHeight;
+            }
+        }
+        setMeasuredDimension(
+                modeWidth == MeasureSpec.EXACTLY ? sizeWidth : width + getPaddingLeft() + getPaddingRight(),
+                modeHeight == MeasureSpec.EXACTLY ? sizeHeight : height + getPaddingTop() + getPaddingBottom()
+        );
+        //设置一行所有图片的宽高
+        final int imageSideLen = sizeWidth / mMaxLineNum;
+        //只初始化一次
+        if (mIsOnceInitOnMeasure) {
+            mParams = new LayoutParams(imageSideLen, imageSideLen);
+            mIsOnceInitOnMeasure = false;
+        }
+    }
+
+    private void initAddIcon() {
+        mIconAdd = new IconTextView(getContext());
+        mIconAdd.setText(ICON_TEXT);
+        mIconAdd.setGravity(Gravity.CENTER);
+        mIconAdd.setTextSize(mIconSize);
+        mIconAdd.setBackgroundResource(R.drawable.border_text);
+        mIconAdd.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDelegate.startCameraWithCheck();
+            }
+        });
+        this.addView(mIconAdd);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        initAddIcon();
+        mTargetDialog = new AlertDialog.Builder(getContext()).create();
     }
 }
