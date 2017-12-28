@@ -67,7 +67,7 @@ public class OrderListDelegate extends OrangeDelegate {
                                 new OrderListDataConverter().setJsonData(response).convert();
                         final OrderListAdapter adapter = new OrderListAdapter(data);
                         mRvOrderList.setAdapter(adapter);
-//                        mRvOrderList.addOnItemTouchListener(new OrderListClickListener(OrderListDelegate.this));
+                        mRvOrderList.addOnItemTouchListener(new OrderListClickListener(OrderListDelegate.this));
                     }
                 })
                 .build()
