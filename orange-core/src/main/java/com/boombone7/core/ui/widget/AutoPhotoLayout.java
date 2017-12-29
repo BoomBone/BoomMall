@@ -2,15 +2,24 @@ package com.boombone7.core.ui.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 
 import com.boombone7.core.R;
 import com.boombone7.core.delegates.OrangeDelegate;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import java.util.ArrayList;
@@ -40,6 +49,10 @@ public class AutoPhotoLayout extends LinearLayoutCompat {
     private final ArrayList<ArrayList<View>> ALL_VIEWS = new ArrayList<>();
     private final ArrayList<Integer> LINE_HEIGHTS = new ArrayList<>();
 
+    private static final RequestOptions OPTIONS = new RequestOptions()
+            .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.NONE);
+
     //防止多次的测量和布局过程
     private boolean mIsOnceInitOnMeasure = false;
     private boolean mHasInitOnLayout = false;
@@ -60,6 +73,89 @@ public class AutoPhotoLayout extends LinearLayoutCompat {
         mImageMargin = typedArray.getInt(R.styleable.camera_flow_layout_item_margin, 0);
         mIconSize = typedArray.getDimension(R.styleable.camera_flow_layout_icon_size, 20);
         typedArray.recycle();
+    }
+
+    public final void setDelegate(OrangeDelegate delegate) {
+        this.mDelegate = delegate;
+    }
+
+    public final void onCropTarget(Uri uri) {
+        createNewImageView();
+        Glide.with(mDelegate)
+                .load(uri)
+                .apply(OPTIONS)
+                .into(mTargetImageView);
+    }
+
+    private void createNewImageView() {
+        mTargetImageView = new AppCompatImageView(getContext());
+        mTargetImageView.setId(mCurrentNum);
+        mTargetImageView.setLayoutParams(mParams);
+        mTargetImageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //获取要删除的图片ID
+                mDeleteId = v.getId();
+                mTargetDialog.show();
+                final Window window = mTargetDialog.getWindow();
+                if (window != null) {
+                    window.setContentView(R.layout.dialog_image_click_panel);
+                    window.setGravity(Gravity.BOTTOM);
+                    window.setWindowAnimations(R.style.anim_panel_up_from_bottom);
+                    window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    final WindowManager.LayoutParams params = window.getAttributes();
+                    params.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                    params.dimAmount = 0.5f;
+                    window.setAttributes(params);
+                    window.findViewById(R.id.dialog_image_clicked_btn_delete)
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //得到要删除的图片
+                                    final AppCompatImageView deleteImageViwe =
+                                            (AppCompatImageView) findViewById(mDeleteId);
+                                    //设置图片逐渐消失的动画
+                                    final AlphaAnimation animation = new AlphaAnimation(1, 0);
+                                    animation.setDuration(500);
+                                    animation.setRepeatCount(0);
+                                    animation.setFillAfter(true);
+                                    animation.setStartOffset(0);
+                                    deleteImageViwe.setAnimation(animation);
+                                    animation.start();
+                                    AutoPhotoLayout.this.removeView(deleteImageViwe);
+                                    mCurrentNum -= 1;
+                                    //当数目达到上限时隐藏添加按钮，不足时显示
+                                    if (mCurrentNum < mMaxNum) {
+                                        mIconAdd.setVisibility(VISIBLE);
+                                    }
+                                    mTargetDialog.cancel();
+                                }
+                            });
+                    window.findViewById(R.id.dialog_image_clicked_btn_undetermined)
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mTargetDialog.cancel();
+                                }
+                            });
+                    window.findViewById(R.id.dialog_image_clicked_btn_cancel)
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mTargetDialog.cancel();
+                                }
+                            });
+                }
+            }
+        });
+        //添加子View的时候传入位置
+        this.addView(mTargetImageView, mCurrentNum);
+        mCurrentNum++;
+        //当天家数目大于mMaxNum时，自动隐藏添加按钮
+        if (mCurrentNum >= mMaxNum) {
+            mIconAdd.setVisibility(View.GONE);
+        }
     }
 
     @Override
