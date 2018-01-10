@@ -21,6 +21,8 @@ import com.boombone7.core.net.callback.ISuccess;
 import com.boombone7.core.ui.recycler.BaseDecoration;
 import com.boombone7.core.ui.recycler.MultipleItemEntity;
 import com.boombone7.core.ui.refresh.RefreshHandler;
+import com.boombone7.core.util.callback.CallbackManager;
+import com.boombone7.core.util.callback.IGlobalCallback;
 import com.boombone7.orange.ec.R;
 import com.boombone7.orange.ec.R2;
 import com.boombone7.orange.ec.main.EcBottomDelegate;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -53,6 +56,11 @@ public class IndexDelegate extends BottomItemDelegate {
 
     private RefreshHandler mRefreshHandler = null;
 
+    @OnClick(R2.id.icon_index_scan)
+    void onClickScanQrCode() {
+        startScanWithCheck(this.getParentDelegate());
+    }
+
     @Override
     public Object setLayout() {
         return R.layout.delegate_index;
@@ -61,6 +69,13 @@ public class IndexDelegate extends BottomItemDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         mRefreshHandler = RefreshHandler.create(mSrlIndex, mRvIndex, new IndexDataConverter());
+        CallbackManager.getInstance()
+                .addCallback(I.CallbackType.ON_SCAN, new IGlobalCallback<String>() {
+                    @Override
+                    public void executeCallback(@Nullable String args) {
+                        Toast.makeText(getContext(), "得到的二维码是" + args, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     @Override
@@ -76,7 +91,7 @@ public class IndexDelegate extends BottomItemDelegate {
         mRvIndex.setLayoutManager(manager);
         mRvIndex.addItemDecoration
                 (BaseDecoration.create(ContextCompat.getColor(getContext()
-                        ,R.color.app_background),5));
+                        , R.color.app_background), 5));
         final EcBottomDelegate ecBottomDelegate = getParentDelegate();
         mRvIndex.addOnItemTouchListener(IndexItemClickListener.create(ecBottomDelegate));
 

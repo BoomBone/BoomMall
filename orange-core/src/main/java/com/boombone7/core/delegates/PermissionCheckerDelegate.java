@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.boombone7.core.I;
 import com.boombone7.core.ui.camera.CameraImageBean;
 import com.boombone7.core.ui.camera.OrangeCamera;
+import com.boombone7.core.ui.scanner.ScannerDelegate;
 import com.boombone7.core.util.callback.CallbackManager;
 import com.boombone7.core.util.callback.IGlobalCallback;
 import com.boombone7.core.util.log.OLog;
@@ -42,9 +43,20 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
     }
 
 
-    //真正的调用方法
+    //开照相机真正的调用方法
     public void startCameraWithCheck() {
         PermissionCheckerDelegatePermissionsDispatcher.startCameraWithPermissionCheck(this);
+    }
+
+    //扫描二维码(不直接调用)
+    @NeedsPermission(Manifest.permission.CAMERA)
+    void startScan(BaseDelegate delegate) {
+        delegate.getSupportDelegate().startForResult(new ScannerDelegate(), I.RequestCodes.SCAN);
+    }
+
+    //扫描真正的调用方法
+    public void startScanWithCheck(BaseDelegate delegate) {
+        PermissionCheckerDelegatePermissionsDispatcher.startScanWithPermissionCheck(this, delegate);
     }
 
     @OnPermissionDenied(Manifest.permission.CAMERA)
