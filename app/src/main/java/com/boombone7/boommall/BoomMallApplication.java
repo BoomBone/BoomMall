@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 
 import com.blankj.utilcode.util.Utils;
+import com.boombone7.boommall.event.ShareEvent;
 import com.boombone7.boommall.event.TestEvent;
 import com.boombone7.core.I;
 import com.boombone7.core.app.Orange;
@@ -16,6 +17,7 @@ import com.boombone7.core.util.callback.IGlobalCallback;
 import com.boombone7.orange.ec.database.DatabaseManager;
 import com.boombone7.orange.ec.icon.FontEcModule;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
+import com.mob.MobSDK;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -39,7 +41,8 @@ public class BoomMallApplication extends Application {
                 //添加Cookie同步拦截器
                 .withInterceptor(new AddCookieInterceptor())
                 .withWebHost("https://www.baidu.com/")
-                .withWebEvent("test",new TestEvent())
+                .withWebEvent("share",new ShareEvent())
+                .withWebEvent("test", new TestEvent())
                 .configure();
         DatabaseManager.getInstance().init(this);
         Utils.init(this);
@@ -48,6 +51,7 @@ public class BoomMallApplication extends Application {
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
 
+        MobSDK.init(this);
         CallbackManager.getInstance()
                 .addCallback(I.CallbackType.TAG_OPEN_PUSH, new IGlobalCallback() {
                     @Override
